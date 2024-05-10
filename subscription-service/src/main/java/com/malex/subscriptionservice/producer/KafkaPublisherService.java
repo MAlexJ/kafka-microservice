@@ -5,19 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KafkaProducerService {
+public class KafkaPublisherService {
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
   @Value("${cloud.kafka.topic}")
   private String topic;
 
-  public void send(String message) {
-    log.info("Send message - {}", message);
+  public Mono<Void> send(String message) {
     kafkaTemplate
         .send(topic, message)
         .thenAccept(
@@ -31,5 +31,6 @@ public class KafkaProducerService {
                   partition,
                   offset);
             });
+    return Mono.empty();
   }
 }
