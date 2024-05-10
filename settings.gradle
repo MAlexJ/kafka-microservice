@@ -1,0 +1,4 @@
+rootProject.name = 'kafka-microservice'
+
+include 'subscription-service',
+        'rss-reader-service'
