@@ -1,4 +1,4 @@
-package com.malex.rssreaderservice.service.producer;
+package com.malex.rssreaderservice.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

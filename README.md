@@ -31,6 +31,9 @@ Note that other users' actions may affect your experience on this server.
 tutorial: simple consumer + producer <br>
 link: https://habr.com/ru/articles/742786/
 
+reactive kafka:
+link: https://blog.devgenius.io/reactive-kafka-producer-consumer-springboot-404719028275
+
 ### How to set up kafka:
 
 link for info - https://customer.cloudkarafka.com/instance </br>

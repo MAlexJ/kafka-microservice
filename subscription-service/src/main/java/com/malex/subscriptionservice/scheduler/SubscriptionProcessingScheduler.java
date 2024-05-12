@@ -26,7 +26,8 @@ public class SubscriptionProcessingScheduler {
    */
   @Bean
   public Disposable processingSubscriptions() {
-    return Flux.interval(Duration.ofMinutes(1)) // run every minute
+    return Flux.interval(Duration.ofMinutes(1))
+        // run every minute
         .publishOn(Schedulers.boundedElastic())
         .onBackpressureDrop()
         // if the task below takes a long time, greater than the next tick, then just drop this tick

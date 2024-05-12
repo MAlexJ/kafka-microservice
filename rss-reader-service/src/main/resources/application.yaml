@@ -20,7 +20,7 @@ spring:
             username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
 
     consumer:
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       group-id: ${CLOUD_KAFKA_USERNAME}-consumers
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
@@ -35,3 +35,8 @@ kafka:
     topic: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC:filtering-topic}
   subscription:
     topic: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:rss-subscription-topic}
+
+md5Hash:
+  calculation:
+    baseOn:
+      link: ${APP_SERVICE_CALCULATE_MD5_ONLY_FOR_LINK:true}
