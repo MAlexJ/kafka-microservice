@@ -30,6 +30,18 @@ spring:
             trusted:
               packages: '*'
 
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable:
+          idempotence: false
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+
 kafka:
   filter:
     topic: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC:filtering-topic}

@@ -16,7 +16,7 @@ public class KafkaConsumerService {
 
   @KafkaListener(
       topics = "${kafka.filter.topic}",
-      properties = {"spring.json.value.default.type=com.malex.rssreaderservice.model.RssItem"})
+      properties = {"spring.json.value.default.type=com.malex.filteringservice.model.RssItem"})
   public void processMessage(
       RssItem item,
       @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,

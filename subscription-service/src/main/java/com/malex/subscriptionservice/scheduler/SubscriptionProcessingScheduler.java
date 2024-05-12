@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.scheduler;
 
-import com.malex.subscriptionservice.producer.KafkaPublisherService;
+import com.malex.subscriptionservice.kafka.producer.KafkaPublisherService;
 import com.malex.subscriptionservice.service.SubscriptionService;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.malex.subscriptionservice.producer;
+package com.malex.subscriptionservice.kafka.producer;
 
 import com.malex.subscriptionservice.model.dto.SubscriptionDto;
 import lombok.RequiredArgsConstructor;

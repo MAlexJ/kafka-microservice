@@ -1,5 +1,6 @@
 package com.malex.rssreaderservice.kafka.consumer;
 
+import com.malex.rssreaderservice.kafka.producer.KafkaProducerService;
 import com.malex.rssreaderservice.model.Subscription;
 import com.malex.rssreaderservice.webservice.RssReaderWebService;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumerService {
 
   private final RssReaderWebService rssReaderService;
+  private final KafkaProducerService producerService;
 
   /** Setup <a href="https://habr.com/ru/articles/742786/">Simple producer and consumer</a> */
   @KafkaListener(
@@ -32,6 +34,7 @@ public class KafkaConsumerService {
           rssReaderService
               .readRss(subscription)
               .doOnNext(rssItem -> log.info("Push item - {}", rssItem))
+              .map(producerService::send)
               .subscribe();
 
           log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
