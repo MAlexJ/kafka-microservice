@@ -1,23 +1,24 @@
-package com.malex.filteringservice.kafka.producer;
+package com.malex.rssreaderservice.kafka.producer;
 
-import com.malex.filteringservice.model.RssItem;
+import com.malex.rssreaderservice.model.RssItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KafkaProducerService {
+public class KafkaProducer {
 
   private final KafkaTemplate<String, Object> kafkaTemplate;
 
-  @Value("${kafka.topic.out}")
+  @Value("${kafka.filter.topic}")
   private String topic;
 
-  public void send(RssItem item) {
+  public Mono<Void> send(RssItem item) {
     kafkaTemplate
         .send(topic, item.md5Hash(), item)
         .thenAccept(
@@ -31,5 +32,6 @@ public class KafkaProducerService {
                   partition,
                   offset);
             });
+    return Mono.empty();
   }
 }

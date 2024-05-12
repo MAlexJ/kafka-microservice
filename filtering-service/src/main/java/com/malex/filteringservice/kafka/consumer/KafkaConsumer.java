@@ -1,5 +1,6 @@
 package com.malex.filteringservice.kafka.consumer;
 
+import com.malex.filteringservice.kafka.producer.KafkaProducerService;
 import com.malex.filteringservice.model.RssItem;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KafkaConsumerService {
+public class KafkaConsumer {
+
+  private final KafkaProducerService kafkaProducer;
 
   @KafkaListener(
-      topics = "${kafka.filter.topic}",
+      topics = "${kafka.topic.in}",
       properties = {"spring.json.value.default.type=com.malex.filteringservice.model.RssItem"})
   public void processMessage(
       RssItem item,
@@ -24,5 +27,7 @@ public class KafkaConsumerService {
       @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     log.info("RSS item - {} ", item);
     log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
+
+    kafkaProducer.send(item);
   }
 }
