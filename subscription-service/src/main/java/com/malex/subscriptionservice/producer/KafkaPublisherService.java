@@ -1,5 +1,6 @@
 package com.malex.subscriptionservice.producer;
 
+import com.malex.subscriptionservice.model.dto.SubscriptionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +13,14 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class KafkaPublisherService {
 
-  private final KafkaTemplate<String, String> kafkaTemplate;
+  private final KafkaTemplate<String, Object> kafkaTemplate;
 
-  @Value("${cloud.kafka.topic}")
+  @Value("${kafka.subscription.topic}")
   private String topic;
 
-  public Mono<Void> send(String message) {
+  public Mono<Void> send(SubscriptionDto subscription) {
     kafkaTemplate
-        .send(topic, message)
+        .send(topic, subscription.id(), subscription)
         .thenAccept(
             result -> {
               var metadata = result.getRecordMetadata();

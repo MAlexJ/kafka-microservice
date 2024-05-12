@@ -10,7 +10,7 @@
 * render.com webservice
 * UptimeRobot webservice monitoring
 
-## Cloud kafka
+### Cloud kafka
 
 free kafka online - https://www.cloudkarafka.com/ </br>
 Free plan: $0 </br>
@@ -25,6 +25,11 @@ Note that other users' actions may affect your experience on this server.
 * Certificate based authentication
 * Consume and produce from Kafka in a UI
 * Email and chat support
+
+### Kafka
+
+tutorial: simple consumer + producer <br>
+link: https://habr.com/ru/articles/742786/
 
 ### How to set up kafka:
 

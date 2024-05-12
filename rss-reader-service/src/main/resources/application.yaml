@@ -1,0 +1,37 @@
+server:
+  port: ${SUBSCRIPTION_SERVICE_PORT:0}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${SUBSCRIPTION_SERVICE_NAME:rss-reader-service}
+
+  kafka:
+    bootstrap-servers: ${CLOUD_KAFKA_BROKER_URL}
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas:
+          config: org.apache.kafka.common.security.scram.ScramLoginModule required
+            username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
+
+    consumer:
+      auto-offset-reset: earliest
+      group-id: ${CLOUD_KAFKA_USERNAME}-consumers
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+
+kafka:
+  filter:
+    topic: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC:filtering-topic}
+  subscription:
+    topic: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:rss-subscription-topic}

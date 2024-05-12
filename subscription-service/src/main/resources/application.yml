@@ -25,22 +25,18 @@ spring:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required
             username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
 
-    consumer:
-      auto-offset-reset: latest
-      group-id: ${CLOUD_KAFKA_USERNAME}-consumers
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: com.malex
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
     producer:
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         enable:
           idempotence: false
+        spring:
+          json:
+            add:
+              type:
+                headers: false
 
-cloud:
-  kafka:
+kafka:
+  subscription:
     topic: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:rss-subscription-topic}

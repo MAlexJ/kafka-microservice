@@ -35,10 +35,6 @@ public class SubscriptionProcessingScheduler {
   }
 
   private Flux<Void> processing() {
-    return Flux.defer(
-        () ->
-            service
-                .findAllActiveSubscriptions()
-                .flatMap(subscription -> publisher.send(subscription.toString())));
+    return Flux.defer(() -> service.findAllActiveSubscriptions().flatMap(publisher::send));
   }
 }
