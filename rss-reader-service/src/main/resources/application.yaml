@@ -43,12 +43,12 @@ spring:
                 headers: false
 
 kafka:
-  filter:
-    topic: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC:filtering-topic}
-  subscription:
-    topic: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:rss-subscription-topic}
+  topic:
+    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:subscription-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:filtering-topic}
+
 
 md5Hash:
   calculation:
     baseOn:
-      link: ${APP_SERVICE_CALCULATE_MD5_ONLY_FOR_LINK:true}
+      link: ${SUBSCRIPTION_SERVICE_CALCULATE_MD5_ONLY_FOR_LINK:true}

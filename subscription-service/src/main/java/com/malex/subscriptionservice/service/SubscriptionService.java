@@ -1,7 +1,7 @@
 package com.malex.subscriptionservice.service;
 
 import com.malex.subscriptionservice.mapper.ObjectMapper;
-import com.malex.subscriptionservice.model.dto.SubscriptionDto;
+import com.malex.subscriptionservice.model.Subscription;
 import com.malex.subscriptionservice.model.request.SubscriptionRequest;
 import com.malex.subscriptionservice.model.response.SubscriptionResponse;
 import com.malex.subscriptionservice.repository.SubscriptionRepository;
@@ -29,8 +29,8 @@ public class SubscriptionService {
     return repository.findAll().map(mapper::entityToResponse);
   }
 
-  public Flux<SubscriptionDto> findAllActiveSubscriptions() {
-    return repository.findActiveSubscription(true).map(mapper::entityToDto);
+  public Flux<Subscription> findAllActiveSubscriptions() {
+    return repository.findActiveSubscription(true).map(mapper::entityToModel);
   }
 
   public Mono<Long> unsubscribe(String id) {

@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KafkaConsumerService {
+public class KafkaConsumer {
 
   private final RssReaderWebService rssReaderService;
   private final KafkaProducer producerService;
 
   /** Setup <a href="https://habr.com/ru/articles/742786/">Simple producer and consumer</a> */
   @KafkaListener(
-      topics = "${kafka.subscription.topic}",
+      topics = "${kafka.topic.in}",
       properties = {"spring.json.value.default.type=com.malex.rssreaderservice.model.Subscription"})
   public void processMessage(
       Subscription subscription,

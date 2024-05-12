@@ -1,8 +1,6 @@
-package com.malex.templateresolverservice.kafka.consumer;
+package com.malex.telegrampublisherservice.kafka.consumer;
 
-import com.malex.templateresolverservice.kafka.producer.KafkaProducer;
-import com.malex.templateresolverservice.model.Message;
-import com.malex.templateresolverservice.model.RssItem;
+import com.malex.telegrampublisherservice.model.Message;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,20 +14,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  private final KafkaProducer kafkaProducer;
-
   @KafkaListener(
       topics = "${kafka.topic.in}",
       properties = {
-        "spring.json.value.default.type=com.malex.templateresolverservice.model.RssItem"
+        "spring.json.value.default.type=com.malex.telegrampublisherservice.model.Message"
       })
   public void processMessage(
-      RssItem item,
+      Message message,
       @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
       @Header(KafkaHeaders.RECEIVED_TOPIC) List<String> topics,
       @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
-    log.info("RSS item - {} ", item);
+    log.info("Telegram message - {} ", message);
     log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
-    kafkaProducer.send(item.md5Hash(), new Message(item.chatId(), item.description()));
   }
 }

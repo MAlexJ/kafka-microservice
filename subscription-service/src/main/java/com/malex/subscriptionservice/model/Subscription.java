@@ -1,9 +1,9 @@
-package com.malex.subscriptionservice.model.dto;
+package com.malex.subscriptionservice.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record SubscriptionDto(
+public record Subscription(
     String id,
     Long chatId,
     String templateId,

@@ -11,7 +11,7 @@ spring:
   data:
     mongodb:
       uri: ${TEMPLATE_RESOLVER_SERVICE_MONGODB_URI:uri}
-      database: ${TEMPLATE_RESOLVER_SERVICE_MONGODB_DATABASE:subscription-service-db}
+      database: ${TEMPLATE_RESOLVER_SERVICE_MONGODB_DATABASE:template-resolver-service-db}
       auto-index-creation: true
 
   kafka:
@@ -50,7 +50,7 @@ spring:
 kafka:
   topic:
     in: ${CLOUD_KAFKA_USERNAME}-${TEMPLATE_RESOLVER_SERVICE_TOPIC_IN:template-resolver-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${TEMPLATE_RESOLVER_SERVICE_TOPIC_OUT:telegram-publisher-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${TEMPLATE_RESOLVER_SERVICE_TOPIC_OUT:publisher-topic}
 
 template:
   default: ${APP_SERVICE_TEMPLATE_DEFAULT:"{{title}} \n {{link}}"}

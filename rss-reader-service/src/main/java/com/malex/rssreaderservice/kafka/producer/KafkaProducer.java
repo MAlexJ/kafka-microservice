@@ -15,7 +15,7 @@ public class KafkaProducer {
 
   private final KafkaTemplate<String, Object> kafkaTemplate;
 
-  @Value("${kafka.filter.topic}")
+  @Value("${kafka.topic.out}")
   private String topic;
 
   public Mono<Void> send(RssItem item) {

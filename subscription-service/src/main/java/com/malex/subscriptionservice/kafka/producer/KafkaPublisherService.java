@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.kafka.producer;
 
-import com.malex.subscriptionservice.model.dto.SubscriptionDto;
+import com.malex.subscriptionservice.model.Subscription;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +15,10 @@ public class KafkaPublisherService {
 
   private final KafkaTemplate<String, Object> kafkaTemplate;
 
-  @Value("${kafka.subscription.topic}")
+  @Value("${kafka.topic.in}")
   private String topic;
 
-  public Mono<Void> send(SubscriptionDto subscription) {
+  public Mono<Void> send(Subscription subscription) {
     kafkaTemplate
         .send(topic, subscription.id(), subscription)
         .thenAccept(

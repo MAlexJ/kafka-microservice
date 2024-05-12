@@ -1,5 +1,6 @@
 package com.malex.templateresolverservice.kafka.producer;
 
+import com.malex.templateresolverservice.model.Message;
 import com.malex.templateresolverservice.model.RssItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,9 @@ public class KafkaProducer {
   @Value("${kafka.topic.out}")
   private String topic;
 
-  public void send(RssItem item) {
+  public void send(String md5Hash, Message message) {
     kafkaTemplate
-        .send(topic, item.md5Hash(), item)
+        .send(topic,md5Hash, message)
         .thenAccept(
             result -> {
               var metadata = result.getRecordMetadata();

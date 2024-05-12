@@ -38,5 +38,5 @@ spring:
                 headers: false
 
 kafka:
-  subscription:
-    topic: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:rss-subscription-topic}
+  topic:
+    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:subscription-topic}

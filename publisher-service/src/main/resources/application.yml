@@ -1,17 +1,17 @@
 server:
-  port: ${FILTERING_SERVICE_PORT:0}
+  port: ${PUBLISHER_SERVICE_PORT:0}
 
 spring:
   config:
     import: optional:file:.env[.properties]
 
   application:
-    name: ${FILTERING_SERVICE_NAME:filtering-service}
+    name: ${PUBLISHER_SERVICE_NAME:publisher-service}
 
   data:
     mongodb:
-      uri: ${FILTERING_SERVICE_MONGODB_URI:uri}
-      database: ${FILTERING_SERVICE_MONGODB_DATABASE:filtering-service-service-db}
+      uri: ${PUBLISHER_SERVICE_MONGODB_URI:uri}
+      database: ${PUBLISHER_SERVICE_MONGODB_DATABASE:publisher-service-db}
       auto-index-creation: true
 
   kafka:
@@ -36,19 +36,6 @@ spring:
             trusted:
               packages: '*'
 
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        enable:
-          idempotence: false
-        spring:
-          json:
-            add:
-              type:
-                headers: false
-
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_IN:filtering-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_OUT:template-resolver-topic}
+    in: ${CLOUD_KAFKA_USERNAME}-${PUBLISHER_SERVICE_TOPIC_IN:publisher-topic}
