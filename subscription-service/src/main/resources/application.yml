@@ -14,29 +14,13 @@ spring:
       database: ${SUBSCRIPTION_SERVICE_MONGODB_DATABASE:subscription-service-db}
       auto-index-creation: true
 
-  kafka:
-    bootstrap-servers: ${CLOUD_KAFKA_BROKER_URL}
-    properties:
-      security:
-        protocol: SASL_SSL
-      sasl:
-        mechanism: SCRAM-SHA-256
-        jaas:
-          config: org.apache.kafka.common.security.scram.ScramLoginModule required
-            username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
-
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        enable:
-          idempotence: false
-        spring:
-          json:
-            add:
-              type:
-                headers: false
-
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC:subscription-topic}
+    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:subscription-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:subscription-topic}
+  producer:
+    bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
+    propertySecurityProtocol: SASL_SSL
+    propertySaslMechanism: SCRAM-SHA-256
+    propertySaslJaasConfig: org.apache.kafka.common.security.scram.ScramLoginModule required
+      username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";

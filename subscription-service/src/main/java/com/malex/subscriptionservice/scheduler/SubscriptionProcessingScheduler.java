@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.scheduler;
 
-import com.malex.subscriptionservice.kafka.producer.KafkaPublisherService;
+import com.malex.subscriptionservice.kafka.producer.KafkaProducer;
 import com.malex.subscriptionservice.service.SubscriptionService;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
+import reactor.kafka.sender.SenderResult;
 
 @Slf4j
 @Configuration
@@ -17,7 +18,7 @@ import reactor.core.scheduler.Schedulers;
 public class SubscriptionProcessingScheduler {
 
   private final SubscriptionService service;
-  private final KafkaPublisherService publisher;
+  private final KafkaProducer publisher;
 
   /**
    * Scheduled and Spring webflux link: <a
@@ -35,7 +36,7 @@ public class SubscriptionProcessingScheduler {
         .subscribe();
   }
 
-  private Flux<Void> processing() {
-    return Flux.defer(() -> service.findAllActiveSubscriptions().flatMap(publisher::send));
+  private Flux<SenderResult<Void>> processing() {
+    return Flux.defer(() -> service.findAllActiveSubscriptions().flatMap(publisher::sendMessage));
   }
 }
