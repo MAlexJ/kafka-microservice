@@ -17,10 +17,15 @@ spring:
 kafka:
   topic:
     in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:subscription-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:subscription-topic}
-  producer:
+    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:replay-telegram-topic}
+  server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
     propertySecurityProtocol: SASL_SSL
     propertySaslMechanism: SCRAM-SHA-256
     propertySaslJaasConfig: org.apache.kafka.common.security.scram.ScramLoginModule required
       username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
+  producer:
+    keySerializer: org.apache.kafka.common.serialization.StringSerializer
+    valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
+    propertyEnableIdempotence: false
+    propertySpringJsonAddTypeHeaders: false

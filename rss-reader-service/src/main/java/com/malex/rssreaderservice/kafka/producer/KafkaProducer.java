@@ -27,7 +27,8 @@ public class KafkaProducer {
               var offset = metadata.offset();
               var partition = metadata.partition();
               log.info(
-                  "Message was sent, topic - {}, partition - {}, offset - {}",
+                  "Send RSS item with md5 - {} to topic - {}, partition - {}, offset - {}",
+                  item.md5Hash(),
                   metadata.topic(),
                   partition,
                   offset);

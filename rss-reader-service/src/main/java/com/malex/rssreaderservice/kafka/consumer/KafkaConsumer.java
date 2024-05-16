@@ -25,19 +25,20 @@ public class KafkaConsumer {
       properties = {"spring.json.value.default.type=com.malex.rssreaderservice.model.Subscription"})
   public void processMessage(
       Subscription subscription,
+      @Header(KafkaHeaders.RECEIVED_KEY) String key,
       @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
       @Header(KafkaHeaders.RECEIVED_TOPIC) List<String> topics,
       @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     errorHandler(
         subscription,
         () -> {
-          rssReaderService
-              .readRss(subscription)
-              .doOnNext(rssItem -> log.info("Push item - {}", rssItem))
-              .map(producerService::send)
-              .subscribe();
-
-          log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
+          log.info(
+              "Received message key:{} topic:{}, partition:{}, offset: {}",
+              key,
+              topics,
+              partitions,
+              offsets);
+          rssReaderService.readRss(subscription).map(producerService::send).subscribe();
         });
   }
 
