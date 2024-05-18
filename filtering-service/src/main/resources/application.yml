@@ -64,7 +64,7 @@ kafka:
     propertyEnableIdempotence: false
     propertySpringJsonAddTypeHeaders: false
   consumer:
-    autoOffsetReset: latest
+    autoOffsetReset: earliest
     groupId: ${CLOUD_KAFKA_USERNAME}-consumers
     keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
     valueDeserializer: org.springframework.kafka.support.serializer.JsonDeserializer

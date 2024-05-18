@@ -1,11 +1,10 @@
-package com.malex.rssreaderservice.configuration;
+package com.malex.filteringservice.configuration;
 
-import com.malex.rssreaderservice.model.event.RssItem;
-import com.malex.rssreaderservice.model.event.Subscription;
-import com.malex.rssreaderservice.property.KafkaConfigurationProperties;
-import com.malex.rssreaderservice.property.KafkaConsumerConfigurationProperties;
-import com.malex.rssreaderservice.property.KafkaProducerConfigurationProperties;
-import com.malex.rssreaderservice.property.KafkaTopicConfigurationProperties;
+import com.malex.filteringservice.model.event.RssItem;
+import com.malex.filteringservice.property.KafkaConfigurationProperties;
+import com.malex.filteringservice.property.KafkaConsumerConfigurationProperties;
+import com.malex.filteringservice.property.KafkaProducerConfigurationProperties;
+import com.malex.filteringservice.property.KafkaTopicConfigurationProperties;
 import java.util.Collections;
 import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +21,6 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.sender.SenderOptions;
 
-/**
- * Configuration SASL_SSL connection: <a
- * href="https://stackoverflow.com/questions/60825373/spring-kafka-application-properties-configuration-for-jaas-sasl-not-working">JAAS/SASL</a>
- */
 @Configuration
 @RequiredArgsConstructor
 public class ReactiveKafkaConfiguration {
@@ -35,7 +30,7 @@ public class ReactiveKafkaConfiguration {
   private final KafkaConsumerConfigurationProperties consumerProperties;
   private final KafkaProducerConfigurationProperties producerProperties;
 
-  private final String messageEvenDeserializationClass = Subscription.class.getName();
+  private final String messageEvenDeserializationClass = RssItem.class.getName();
 
   @Bean
   public ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer() {
@@ -60,17 +55,17 @@ public class ReactiveKafkaConfiguration {
   }
 
   @Bean
-  public ReactiveKafkaConsumerTemplate<String, Subscription> reactiveKafkaConsumer() {
+  public ReactiveKafkaConsumerTemplate<String, RssItem> reactiveKafkaConsumer() {
     var basicReceiverOptions = subscribeOnTopics();
     return new ReactiveKafkaConsumerTemplate<>(basicReceiverOptions);
   }
 
-  private ReceiverOptions<String, Subscription> subscribeOnTopics() {
+  private ReceiverOptions<String, RssItem> subscribeOnTopics() {
     return buidConsumerReceiverOptions()
         .subscription(Collections.singletonList(topicProperties.getIn()));
   }
 
-  private ReceiverOptions<String, Subscription> buidConsumerReceiverOptions() {
+  private ReceiverOptions<String, RssItem> buidConsumerReceiverOptions() {
     var props = new HashMap<String, Object>();
     // base configuration
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServer());

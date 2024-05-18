@@ -1,4 +1,4 @@
-package com.malex.filteringservice.model;
+package com.malex.filteringservice.model.event;
 
 import java.util.List;
 

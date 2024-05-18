@@ -1,33 +1,39 @@
 package com.malex.filteringservice.kafka.consumer;
 
-import com.malex.filteringservice.kafka.producer.KafkaProducerService;
-import com.malex.filteringservice.model.RssItem;
-import java.util.List;
+import com.malex.filteringservice.kafka.producer.KafkaProducer;
+import com.malex.filteringservice.model.event.RssItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  private final KafkaProducerService kafkaProducer;
+  private final KafkaProducer producerService;
+  private final ReactiveKafkaConsumerTemplate<String, RssItem> reactiveKafkaConsumer;
 
-  @KafkaListener(
-      topics = "${kafka.topic.in}",
-      properties = {"spring.json.value.default.type=com.malex.filteringservice.model.RssItem"})
-  public void processMessage(
-      RssItem item,
-      @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
-      @Header(KafkaHeaders.RECEIVED_TOPIC) List<String> topics,
-      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
-    log.info("RSS item - {} ", item);
-    log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
-
-    kafkaProducer.send(item);
+  @EventListener(ApplicationStartedEvent.class)
+  public Flux<String> consumerEventListener() {
+    return reactiveKafkaConsumer
+        .receiveAutoAck()
+        .doOnNext(
+            consumerRecord ->
+                log.info(
+                    "received key={}, value={} from topic={}, partition={} offset={}",
+                    consumerRecord.key(),
+                    consumerRecord.value(),
+                    consumerRecord.topic(),
+                    consumerRecord.partition(),
+                    consumerRecord.offset()))
+        .map(ConsumerRecord::value)
+        .flatMap(producerService::sendMessage)
+        .doOnError(throwable -> log.error("Error - {}", throwable.getMessage()));
   }
 }
