@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/v1/subscriptions")
 @RequiredArgsConstructor
-public class SubscriptionRestController {
+public class ApiRestController {
 
   private final SubscriptionService service;
 

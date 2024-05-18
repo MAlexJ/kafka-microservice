@@ -26,9 +26,9 @@ public class KafkaConsumer {
         .doOnNext(
             consumerRecord ->
                 log.info(
-                    "received key={}, value={} from topic={}, partition={} offset={}",
+                    "Received event key - {}, value - {} from topic - {}, partition - {} offset - {}",
                     consumerRecord.key(),
-                    consumerRecord.value(),
+                    consumerRecord.value().getClass().getSimpleName(),
                     consumerRecord.topic(),
                     consumerRecord.partition(),
                     consumerRecord.offset()))

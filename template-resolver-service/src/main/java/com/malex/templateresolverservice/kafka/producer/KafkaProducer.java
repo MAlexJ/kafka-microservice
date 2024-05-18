@@ -1,36 +1,41 @@
 package com.malex.templateresolverservice.kafka.producer;
 
-import com.malex.templateresolverservice.model.Message;
-import com.malex.templateresolverservice.model.RssItem;
+import com.malex.templateresolverservice.model.event.Message;
+import com.malex.templateresolverservice.property.KafkaTopicConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+import reactor.kafka.sender.SenderResult;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-  private final KafkaTemplate<String, Object> kafkaTemplate;
+  private final KafkaTopicConfigurationProperties topicProperty;
+  private final ReactiveKafkaProducerTemplate<String, Message> reactiveKafkaProducer;
 
-  @Value("${kafka.topic.out}")
-  private String topic;
-
-  public void send(String md5Hash, Message message) {
-    kafkaTemplate
-        .send(topic,md5Hash, message)
-        .thenAccept(
-            result -> {
-              var metadata = result.getRecordMetadata();
-              var offset = metadata.offset();
-              var partition = metadata.partition();
+  public Mono<String> sendMessage(String md5Hash, Message message) {
+    return reactiveKafkaProducer
+        .send(topicProperty.getOut(), md5Hash, message)
+        .doOnSuccess(
+            senderResult -> {
+              Exception exception = senderResult.exception();
+              if (exception != null) {
+                log.warn("Exception occurred while sending message", exception);
+              }
+              var recordMetadata = senderResult.recordMetadata();
               log.info(
-                  "Message was sent, topic - {}, partition - {}, offset - {}",
-                  metadata.topic(),
-                  partition,
-                  offset);
-            });
+                  "Sent RSS item with md5Hash - {} to topic - {}, partition - {},  offset - {}",
+                  md5Hash,
+                  recordMetadata.topic(),
+                  recordMetadata.partition(),
+                  recordMetadata.offset());
+            })
+        .map(SenderResult::recordMetadata)
+        .map(RecordMetadata::topic);
   }
 }

@@ -1,4 +1,4 @@
-package com.malex.templateresolverservice.model;
+package com.malex.templateresolverservice.model.event;
 
 import java.util.List;
 
