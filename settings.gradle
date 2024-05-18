@@ -4,4 +4,5 @@ include 'subscription-service',
         'rss-reader-service',
         'filtering-service',
         'template-resolver-service',
-        'publisher-service'
+        'publisher-service',
+        'customization-service'

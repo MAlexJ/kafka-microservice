@@ -1,23 +1,23 @@
 server:
-  port: ${FILTERING_SERVICE_PORT:0}
+  port: ${CUSTOMIZATION_SERVICE_PORT:0}
 
 spring:
   config:
     import: optional:file:.env[.properties]
 
   application:
-    name: ${FILTERING_SERVICE_NAME:filtering-service}
+    name: ${CUSTOMIZATION_SERVICE_NAME:customization-service}
 
   data:
     mongodb:
-      uri: ${FILTERING_SERVICE_MONGODB_URI:uri}
-      database: ${FILTERING_SERVICE_MONGODB_DATABASE:filtering-service-db}
+      uri: ${CUSTOMIZATION_SERVICE_MONGODB_URI:uri}
+      database: ${CUSTOMIZATION_SERVICE_MONGODB_DATABASE:customization-service-db}
       auto-index-creation: true
 
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_IN:filtering-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_OUT:template-resolver-topic}
+    in: ${CLOUD_KAFKA_USERNAME}-${CUSTOMIZATION_SERVICE_TOPIC_IN:customization-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${CUSTOMIZATION_SERVICE_TOPIC_OUT:template-resolver-topic}
   server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
     propertySecurityProtocol: SASL_SSL

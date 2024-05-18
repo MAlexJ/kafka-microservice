@@ -20,8 +20,9 @@ public class KafkaProducer {
   private final ReactiveKafkaProducerTemplate<String, Subscription> reactiveKafkaProducer;
 
   public Mono<SenderResult<Void>> sendMessage(Subscription message) {
+    UUID key = UUID.randomUUID();
     return reactiveKafkaProducer
-        .send(topicProperties.getOut(), UUID.randomUUID().toString(), message)
+        .send(topicProperties.getOut(), key.toString(), message)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();
@@ -30,8 +31,9 @@ public class KafkaProducer {
               }
               var recordMetadata = senderResult.recordMetadata();
               log.info(
-                  "sent {}, topic {}, partition {},  offset : {}",
-                  message,
+                  "Send event: key - {}, value - {}, topic - {}, partition - {} offset - {}",
+                  key,
+                  message.getClass().getSimpleName(),
                   recordMetadata.topic(),
                   recordMetadata.partition(),
                   recordMetadata.offset());

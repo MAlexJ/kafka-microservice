@@ -1,7 +1,7 @@
-package com.malex.filteringservice.kafka.producer;
+package com.malexj.customizationservice.kafka.producer;
 
-import com.malex.filteringservice.model.event.RssItem;
-import com.malex.filteringservice.property.KafkaTopicConfigurationProperties;
+import com.malexj.customizationservice.model.event.RssItem;
+import com.malexj.customizationservice.property.KafkaTopicConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;

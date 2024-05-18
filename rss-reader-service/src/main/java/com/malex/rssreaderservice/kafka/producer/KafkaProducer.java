@@ -29,8 +29,9 @@ public class KafkaProducer {
               }
               var recordMetadata = senderResult.recordMetadata();
               log.info(
-                  "Sent RSS item with md5Hash - {} to topic - {}, partition - {},  offset - {}",
+                  "Send event: key - {}, value - {}, topic - {}, partition - {} offset - {}",
                   item.md5Hash(),
+                  item.getClass().getSimpleName(),
                   recordMetadata.topic(),
                   recordMetadata.partition(),
                   recordMetadata.offset());

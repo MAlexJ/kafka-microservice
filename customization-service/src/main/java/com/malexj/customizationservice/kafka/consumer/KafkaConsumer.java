@@ -1,8 +1,7 @@
-package com.malex.templateresolverservice.kafka.consumer;
+package com.malexj.customizationservice.kafka.consumer;
 
-import com.malex.templateresolverservice.kafka.producer.KafkaProducer;
-import com.malex.templateresolverservice.model.event.Message;
-import com.malex.templateresolverservice.model.event.RssItem;
+import com.malexj.customizationservice.kafka.producer.KafkaProducer;
+import com.malexj.customizationservice.model.event.RssItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -34,11 +33,7 @@ public class KafkaConsumer {
                     consumerRecord.partition(),
                     consumerRecord.offset()))
         .map(ConsumerRecord::value)
-        .flatMap(
-            item -> {
-              var messageEvent = new Message(item.chatId(), item.description());
-              return producerService.sendMessage(item.md5Hash(), messageEvent);
-            })
+        .flatMap(producerService::sendMessage)
         .doOnError(throwable -> log.error("Error - {}", throwable.getMessage()));
   }
 }
