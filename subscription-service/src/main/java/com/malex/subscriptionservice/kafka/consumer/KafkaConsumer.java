@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.kafka.consumer;
 
-import com.malex.subscriptionservice.property.KafkaTopicProperty;
+import com.malex.subscriptionservice.property.KafkaTopicProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  private final KafkaTopicProperty topicProperty;
+  private final KafkaTopicProperties topicProperties;
 }

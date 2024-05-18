@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/v1/filters")
 @RequiredArgsConstructor
-public class FilterRestController {
+public class ApiRestController {
 
   private final FilterStorageService service;
 

@@ -1,7 +1,7 @@
 package com.malex.subscriptionservice.kafka.producer;
 
 import com.malex.subscriptionservice.model.Subscription;
-import com.malex.subscriptionservice.property.KafkaTopicProperty;
+import com.malex.subscriptionservice.property.KafkaTopicProperties;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +15,13 @@ import reactor.kafka.sender.SenderResult;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-  private final KafkaTopicProperty topicProperty;
+  private final KafkaTopicProperties topicProperties;
 
   private final ReactiveKafkaProducerTemplate<String, Subscription> reactiveKafkaProducer;
 
   public Mono<SenderResult<Void>> sendMessage(Subscription message) {
     return reactiveKafkaProducer
-        .send(topicProperty.getOut(), UUID.randomUUID().toString(), message)
+        .send(topicProperties.getOut(), UUID.randomUUID().toString(), message)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();
