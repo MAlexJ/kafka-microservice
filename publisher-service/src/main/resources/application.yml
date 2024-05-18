@@ -14,28 +14,6 @@ spring:
       database: ${PUBLISHER_SERVICE_MONGODB_DATABASE:publisher-service-db}
       auto-index-creation: true
 
-  kafka:
-    bootstrap-servers: ${CLOUD_KAFKA_BROKER_URL}
-    properties:
-      security:
-        protocol: SASL_SSL
-      sasl:
-        mechanism: SCRAM-SHA-256
-        jaas:
-          config: org.apache.kafka.common.security.scram.ScramLoginModule required
-            username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
-
-    consumer:
-      auto-offset-reset: latest
-      group-id: ${CLOUD_KAFKA_USERNAME}-consumers
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: '*'
-
 kafka:
   topic:
     in: ${CLOUD_KAFKA_USERNAME}-${PUBLISHER_SERVICE_TOPIC_IN:publisher-topic}

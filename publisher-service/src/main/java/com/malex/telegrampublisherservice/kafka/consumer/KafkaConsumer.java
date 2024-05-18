@@ -1,30 +1,36 @@
 package com.malex.telegrampublisherservice.kafka.consumer;
 
-import com.malex.telegrampublisherservice.model.Message;
-import java.util.List;
+import com.malex.telegrampublisherservice.model.event.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  @KafkaListener(
-      topics = "${kafka.topic.in}",
-      properties = {
-        "spring.json.value.default.type=com.malex.telegrampublisherservice.model.Message"
-      })
-  public void processMessage(
-      Message message,
-      @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
-      @Header(KafkaHeaders.RECEIVED_TOPIC) List<String> topics,
-      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
-    log.info("Telegram message - {} ", message);
-    log.info("topic:{}, partition:{}, offset: {}", topics, partitions, offsets);
+  private final ReactiveKafkaConsumerTemplate<String, Message> reactiveKafkaConsumer;
+
+  @EventListener(ApplicationStartedEvent.class)
+  public Flux<Message> consumerEventListener() {
+    return reactiveKafkaConsumer
+        .receiveAutoAck()
+        .doOnNext(
+            consumerRecord ->
+                log.info(
+                    "Received event key - {}, value - {} from topic - {}, partition - {} offset - {}",
+                    consumerRecord.key(),
+                    consumerRecord.value().getClass().getSimpleName(),
+                    consumerRecord.topic(),
+                    consumerRecord.partition(),
+                    consumerRecord.offset()))
+        .map(ConsumerRecord::value)
+        .doOnError(throwable -> log.error("Error - {}", throwable.getMessage()));
   }
 }
