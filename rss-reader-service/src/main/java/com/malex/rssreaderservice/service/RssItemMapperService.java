@@ -1,8 +1,8 @@
 package com.malex.rssreaderservice.service;
 
 import com.apptasticsoftware.rssreader.Item;
-import com.malex.rssreaderservice.model.RssItem;
-import com.malex.rssreaderservice.model.Subscription;
+import com.malex.rssreaderservice.model.event.RssItem;
+import com.malex.rssreaderservice.model.event.Subscription;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.malex.subscriptionservice.configuration;
 
 import com.malex.subscriptionservice.model.Subscription;
-import com.malex.subscriptionservice.property.KafkaConfigurationProperty;
+import com.malex.subscriptionservice.property.KafkaConfigurationProperties;
 import com.malex.subscriptionservice.property.KafkaProducerConfigurationProperties;
 import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import reactor.kafka.sender.SenderOptions;
 @RequiredArgsConstructor
 public class ReactiveKafkaConfiguration {
 
-  private final KafkaConfigurationProperty configurationProperty;
+  private final KafkaConfigurationProperties configurationProperties;
   private final KafkaProducerConfigurationProperties producerConfigurationProperties;
 
   /**
@@ -28,12 +28,13 @@ public class ReactiveKafkaConfiguration {
   @Bean
   public ReactiveKafkaProducerTemplate<String, Subscription> reactiveKafkaProducer() {
     var props = new HashMap<String, Object>();
-    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, configurationProperty.getBootstrapServer());
+    props.put(
+        ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, configurationProperties.getBootstrapServer());
     props.put(
         CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,
-        configurationProperty.getPropertySecurityProtocol());
-    props.put(SaslConfigs.SASL_MECHANISM, configurationProperty.getPropertySaslMechanism());
-    props.put(SaslConfigs.SASL_JAAS_CONFIG, configurationProperty.getPropertySaslJaasConfig());
+        configurationProperties.getPropertySecurityProtocol());
+    props.put(SaslConfigs.SASL_MECHANISM, configurationProperties.getPropertySaslMechanism());
+    props.put(SaslConfigs.SASL_JAAS_CONFIG, configurationProperties.getPropertySaslJaasConfig());
 
     props.put(
         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,

@@ -1,38 +1,41 @@
 package com.malex.rssreaderservice.kafka.producer;
 
-import com.malex.rssreaderservice.model.RssItem;
+import com.malex.rssreaderservice.model.event.RssItem;
+import com.malex.rssreaderservice.property.KafkaTopicConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.kafka.sender.SenderResult;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-  private final KafkaTemplate<String, Object> kafkaTemplate;
+  private final KafkaTopicConfigurationProperties topicProperty;
+  private final ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer;
 
-  @Value("${kafka.topic.out}")
-  private String topic;
-
-  public Mono<Void> send(RssItem item) {
-    kafkaTemplate
-        .send(topic, item.md5Hash(), item)
-        .thenAccept(
-            result -> {
-              var metadata = result.getRecordMetadata();
-              var offset = metadata.offset();
-              var partition = metadata.partition();
+  public Mono<String> sendMessage(RssItem item) {
+    return reactiveKafkaProducer
+        .send(topicProperty.getOut(), item.md5Hash(), item)
+        .doOnSuccess(
+            senderResult -> {
+              Exception exception = senderResult.exception();
+              if (exception != null) {
+                log.warn("Exception occurred while sending message", exception);
+              }
+              var recordMetadata = senderResult.recordMetadata();
               log.info(
-                  "Send RSS item with md5 - {} to topic - {}, partition - {}, offset - {}",
+                  "Sent RSS item with md5Hash - {} to topic - {}, partition - {},  offset - {}",
                   item.md5Hash(),
-                  metadata.topic(),
-                  partition,
-                  offset);
-            });
-    return Mono.empty();
+                  recordMetadata.topic(),
+                  recordMetadata.partition(),
+                  recordMetadata.offset());
+            })
+        .map(SenderResult::recordMetadata)
+        .map(RecordMetadata::topic);
   }
 }

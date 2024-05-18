@@ -16,8 +16,8 @@ spring:
 
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:subscription-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:replay-telegram-topic}
+    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:replay-telegram-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:subscription-topic}
   server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
     propertySecurityProtocol: SASL_SSL

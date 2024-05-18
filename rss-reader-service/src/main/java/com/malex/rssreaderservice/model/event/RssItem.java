@@ -1,10 +1,11 @@
-package com.malex.rssreaderservice.model;
+package com.malex.rssreaderservice.model.event;
 
 import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record RssItem( // item info
+public record RssItem(
+    // item info
     String link,
     String title,
     String description,

@@ -2,8 +2,8 @@ package com.malex.rssreaderservice.webservice;
 
 import com.apptasticsoftware.rssreader.Item;
 import com.apptasticsoftware.rssreader.RssReader;
-import com.malex.rssreaderservice.model.RssItem;
-import com.malex.rssreaderservice.model.Subscription;
+import com.malex.rssreaderservice.model.event.RssItem;
+import com.malex.rssreaderservice.model.event.Subscription;
 import com.malex.rssreaderservice.service.RssItemMapperService;
 import java.io.IOException;
 import java.util.stream.Stream;

@@ -1,4 +1,4 @@
-package com.malex.rssreaderservice.model;
+package com.malex.rssreaderservice.model.event;
 
 import java.time.LocalDateTime;
 import java.util.List;

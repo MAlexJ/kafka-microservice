@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @ConfigurationProperties(prefix = "kafka.server")
-public class KafkaConfigurationProperty {
+public class KafkaConfigurationProperties {
   private String bootstrapServer;
   private String propertySecurityProtocol;
   private String propertySaslMechanism;

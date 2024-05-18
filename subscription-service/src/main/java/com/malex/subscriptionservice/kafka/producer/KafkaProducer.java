@@ -21,7 +21,7 @@ public class KafkaProducer {
 
   public Mono<SenderResult<Void>> sendMessage(Subscription message) {
     return reactiveKafkaProducer
-        .send(topicProperty.getIn(), UUID.randomUUID().toString(), message)
+        .send(topicProperty.getOut(), UUID.randomUUID().toString(), message)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();
