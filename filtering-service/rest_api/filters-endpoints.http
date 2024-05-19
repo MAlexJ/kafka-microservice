@@ -1,0 +1,24 @@
+###
+GET http://localhost:8080/v1/filters
+
+###
+POST http://localhost:8080/v1/filters
+Content-Type: application/json
+
+{
+  "condition": {
+    "type": "EXCLUDE",
+    "keyWords": [
+      " PHP ",
+      "C++",
+      " C# ",
+      "/t.me/",
+      "mobile",
+      "project manager",
+      "python"
+    ]
+  }
+}
+
+###
+DELETE http://localhost:8080/v1/filters/66212a9461821f54bd138f86

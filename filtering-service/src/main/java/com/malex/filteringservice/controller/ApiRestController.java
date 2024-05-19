@@ -2,7 +2,7 @@ package com.malex.filteringservice.controller;
 
 import com.malex.filteringservice.model.request.FilterRequest;
 import com.malex.filteringservice.model.response.FilterResponse;
-import com.malex.filteringservice.service.storage.FilterStorageService;
+import com.malex.filteringservice.service.filter.FilterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ApiRestController {
 
-  private final FilterStorageService service;
+  private final FilterService service;
 
   @GetMapping
   public ResponseEntity<Flux<FilterResponse>> findAll() {

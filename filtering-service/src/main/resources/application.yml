@@ -13,6 +13,9 @@ spring:
       uri: ${FILTERING_SERVICE_MONGODB_URI:uri}
       database: ${FILTERING_SERVICE_MONGODB_DATABASE:filtering-service-db}
       auto-index-creation: true
+filter:
+  criteria:
+    title: ${FILTERING_SERVICE_FILTER_CRITERIA_ONLY_FOR_TITLE:false}
 
 kafka:
   topic:

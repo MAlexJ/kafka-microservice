@@ -27,7 +27,7 @@ public class SubscriptionProcessingScheduler {
    */
   @Bean
   public Disposable processingSubscriptions() {
-    return Flux.interval(Duration.ofMinutes(1))
+    return Flux.interval(Duration.ofSeconds(15))
         // run every minute
         .publishOn(Schedulers.boundedElastic())
         .onBackpressureDrop()
