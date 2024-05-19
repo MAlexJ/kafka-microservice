@@ -1,9 +1,11 @@
 package com.malex.filteringservice.service.filter;
 
 import com.malex.filteringservice.mapper.ObjectMapper;
+import com.malex.filteringservice.model.entity.FilterEntity;
 import com.malex.filteringservice.model.request.FilterRequest;
 import com.malex.filteringservice.model.response.FilterResponse;
 import com.malex.filteringservice.service.storage.FilterStorageService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class FilterService {
   public Flux<FilterResponse> findAll() {
     log.info("Find all filters");
     return service.findAll().map(mapper::entityToDto);
+  }
+
+  /** Test impl */
+  public List<FilterEntity> findFilterList() {
+    return service.findAll().toStream().toList();
   }
 
   public Mono<FilterResponse> save(FilterRequest request) {

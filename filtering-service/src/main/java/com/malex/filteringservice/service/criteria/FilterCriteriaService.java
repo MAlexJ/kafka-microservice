@@ -4,10 +4,10 @@ import static com.malex.filteringservice.model.filter.ConditionType.EXCLUDE;
 import static com.malex.filteringservice.model.filter.ConditionType.INCLUDE;
 
 import com.malex.filteringservice.model.entity.FilterEntity;
-import com.malex.filteringservice.model.event.RssItem;
+import com.malex.filteringservice.model.event.ItemEvent;
 import com.malex.filteringservice.model.filter.ConditionType;
 import com.malex.filteringservice.model.filter.FilterCondition;
-import com.malex.filteringservice.service.storage.FilterStorageService;
+import com.malex.filteringservice.service.filter.FilterService;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +26,10 @@ public class FilterCriteriaService {
   @Value("${filter.criteria.title}")
   private boolean filterCriteriaOnlyToTitle;
 
-  private final FilterStorageService filterStorageService;
+  private final FilterService service;
 
   /** check whether the filter criteria are included or excluded. */
-  public Flux<Boolean> applyFilteringCriteriaIncludedOrExcluded(RssItem item) {
+  public Flux<Boolean> applyFilteringCriteriaIncludedOrExcluded(ItemEvent item) {
     var filterIds = item.filterIds();
     if (Objects.isNull(filterIds) || filterIds.isEmpty()) {
       return Flux.just(true);
@@ -37,7 +37,7 @@ public class FilterCriteriaService {
 
     var text = defineBehaviorForTextMessageOrProvideDefault(item);
     var filters =
-        filterStorageService.findFilterList().stream()
+        service.findFilterList().stream()
             .filter(filter -> filterIds.contains(filter.getId()))
             .toList();
 
@@ -68,7 +68,7 @@ public class FilterCriteriaService {
   }
 
   /** Define the behavior for a text message or provide the default to apply filters */
-  private String defineBehaviorForTextMessageOrProvideDefault(RssItem item) {
+  private String defineBehaviorForTextMessageOrProvideDefault(ItemEvent item) {
     var title = item.title();
     var description = item.description();
     // default behavior

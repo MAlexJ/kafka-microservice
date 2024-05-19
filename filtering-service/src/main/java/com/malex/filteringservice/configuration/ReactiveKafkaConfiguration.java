@@ -1,6 +1,6 @@
 package com.malex.filteringservice.configuration;
 
-import com.malex.filteringservice.model.event.RssItem;
+import com.malex.filteringservice.model.event.ItemEvent;
 import com.malex.filteringservice.property.KafkaConfigurationProperties;
 import com.malex.filteringservice.property.KafkaConsumerConfigurationProperties;
 import com.malex.filteringservice.property.KafkaProducerConfigurationProperties;
@@ -30,10 +30,10 @@ public class ReactiveKafkaConfiguration {
   private final KafkaConsumerConfigurationProperties consumerProperties;
   private final KafkaProducerConfigurationProperties producerProperties;
 
-  private final String messageEvenDeserializationClass = RssItem.class.getName();
+  private final String messageEvenDeserializationClass = ItemEvent.class.getName();
 
   @Bean
-  public ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer() {
+  public ReactiveKafkaProducerTemplate<String, ItemEvent> reactiveKafkaProducer() {
     var props = new HashMap<String, Object>() {};
     // base configuration
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServer());
@@ -55,17 +55,17 @@ public class ReactiveKafkaConfiguration {
   }
 
   @Bean
-  public ReactiveKafkaConsumerTemplate<String, RssItem> reactiveKafkaConsumer() {
+  public ReactiveKafkaConsumerTemplate<String, ItemEvent> reactiveKafkaConsumer() {
     var basicReceiverOptions = subscribeOnTopics();
     return new ReactiveKafkaConsumerTemplate<>(basicReceiverOptions);
   }
 
-  private ReceiverOptions<String, RssItem> subscribeOnTopics() {
+  private ReceiverOptions<String, ItemEvent> subscribeOnTopics() {
     return buidConsumerReceiverOptions()
         .subscription(Collections.singletonList(topicProperties.getIn()));
   }
 
-  private ReceiverOptions<String, RssItem> buidConsumerReceiverOptions() {
+  private ReceiverOptions<String, ItemEvent> buidConsumerReceiverOptions() {
     var props = new HashMap<String, Object>();
     // base configuration
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServer());

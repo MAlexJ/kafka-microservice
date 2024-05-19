@@ -2,7 +2,7 @@ package com.malex.filteringservice.model.event;
 
 import java.util.List;
 
-public record RssItem(
+public record ItemEvent(
     // item info
     String link,
     String title,

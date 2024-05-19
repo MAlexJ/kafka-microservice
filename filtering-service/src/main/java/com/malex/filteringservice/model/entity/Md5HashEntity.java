@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Data
-@Document(collection = "filters")
+@Document(collection = "md5-hashes")
 @TypeAlias("Md5HashEntity")
 public class Md5HashEntity {
 

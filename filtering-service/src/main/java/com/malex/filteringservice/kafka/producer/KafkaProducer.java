@@ -1,6 +1,8 @@
 package com.malex.filteringservice.kafka.producer;
 
-import com.malex.filteringservice.model.event.RssItem;
+import static com.malex.filteringservice.utils.MessageFormatUtils.shortMessageInfo;
+
+import com.malex.filteringservice.model.event.ItemEvent;
 import com.malex.filteringservice.property.KafkaTopicConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +16,11 @@ import reactor.core.publisher.Mono;
 public class KafkaProducer {
 
   private final KafkaTopicConfigurationProperties topicProperty;
-  private final ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer;
+  private final ReactiveKafkaProducerTemplate<String, ItemEvent> reactiveKafkaProducer;
 
-  public Mono<RssItem> sendMessage(RssItem item) {
+  public Mono<ItemEvent> sendMessage(ItemEvent event) {
     return reactiveKafkaProducer
-        .send(topicProperty.getOut(), item.md5Hash(), item)
+        .send(topicProperty.getOut(), event.md5Hash(), event)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();
@@ -28,12 +30,12 @@ public class KafkaProducer {
               var recordMetadata = senderResult.recordMetadata();
               log.info(
                   "Send event: key - {}, value - {}, topic - {}, partition - {} offset - {}",
-                  item.md5Hash(),
-                  item.getClass().getSimpleName(),
+                  event.md5Hash(),
+                  shortMessageInfo(event),
                   recordMetadata.topic(),
                   recordMetadata.partition(),
                   recordMetadata.offset());
             })
-        .map(voidSenderResult -> item);
+        .map(voidSenderResult -> event);
   }
 }
