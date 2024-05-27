@@ -42,7 +42,7 @@ Springboot sample: https://github.com/CloudKarafka/springboot-kafka-example </br
 
 * Hostname with port - url for CLOUD_KAFKA_BROKER_URL
 * Default user - username for CLOUD_KAFKA_USERNAME
-* oPassword - Password for CLOUD_KAFKA_PASSWORD
+* Password - Password for CLOUD_KAFKA_PASSWORD
 
 ### Add ENV properties to project/IDE or .env file
 
