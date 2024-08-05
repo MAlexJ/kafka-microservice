@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 
 @Service
 @RequiredArgsConstructor
-public class EventProcessor {
+public class KafkaEventProcessor {
 
   private final KafkaProducer producerService;
   private final Md5HashService md5HashService;
@@ -20,7 +20,7 @@ public class EventProcessor {
     return items
         .filterWhen(md5HashService::isNotExistItemByMd5Hash)
         .filterWhen(criteriaService::applyFilteringCriteriaIncludedOrExcluded)
-        .flatMap(producerService::sendMessage)
+        .flatMap(producerService::sendKafkaEvent)
         .flatMap(md5HashService::saveItemMd5Hash);
   }
 }

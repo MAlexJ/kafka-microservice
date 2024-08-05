@@ -11,17 +11,14 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-// @CacheConfig(cacheNames = MD5_CACHE_NAME)
 public class Md5HashStorageService {
 
   private final Md5HashRepository repository;
 
-  //  @Cacheable
   public Flux<Md5HashEntity> findByMd5Hash(String md5Hash) {
     return repository.findByMd5Hash(md5Hash);
   }
 
-  //  @CacheEvict(allEntries = true, key = MD5_CACHE_NAME)
   public Mono<Md5HashEntity> save(Md5HashEntity entity) {
     return repository.save(entity);
   }

@@ -3,7 +3,7 @@ package com.malex.filteringservice.kafka.consumer;
 import static com.malex.filteringservice.utils.MessageFormatUtils.shortMessageInfo;
 
 import com.malex.filteringservice.model.event.ItemEvent;
-import com.malex.filteringservice.service.EventProcessor;
+import com.malex.filteringservice.service.KafkaEventProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,6 +11,7 @@ import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 
 @Slf4j
@@ -20,16 +21,24 @@ public class KafkaConsumer {
 
   private final ReactiveKafkaConsumerTemplate<String, ItemEvent> reactiveKafkaConsumer;
 
-  private final EventProcessor eventProcessor;
+  private final KafkaEventProcessor eventProcessor;
 
+  @Transactional
   @EventListener(ApplicationStartedEvent.class)
   public Flux<ItemEvent> consumerEventListener() {
+
+    // Note: test it!
+    //    Flux<ItemEvent> itemEventFlux =
+    //        handleIncomingEvent()
+    //            .transform(itemIventFlux -> eventProcessor.processing(itemIventFlux))
+    //            .doOnError(throwable -> log.error("Error - {}", throwable.getMessage()));
+
     return eventProcessor
-        .processing(receiveEvent())
+        .processing(handleIncomingEvent())
         .doOnError(throwable -> log.error("Error - {}", throwable.getMessage()));
   }
 
-  private Flux<ItemEvent> receiveEvent() {
+  private Flux<ItemEvent> handleIncomingEvent() {
     return reactiveKafkaConsumer
         .receiveAutoAck()
         .doOnNext(

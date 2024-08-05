@@ -7,7 +7,7 @@ import com.malex.filteringservice.model.entity.FilterEntity;
 import com.malex.filteringservice.model.event.ItemEvent;
 import com.malex.filteringservice.model.filter.ConditionType;
 import com.malex.filteringservice.model.filter.FilterCondition;
-import com.malex.filteringservice.service.filter.FilterService;
+import com.malex.filteringservice.service.filter.FilterKafkaService;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class FilterCriteriaService {
   @Value("${filter.criteria.title}")
   private boolean filterCriteriaOnlyToTitle;
 
-  private final FilterService service;
+  private final FilterKafkaService service;
 
   /** check whether the filter criteria are included or excluded. */
   public Flux<Boolean> applyFilteringCriteriaIncludedOrExcluded(ItemEvent item) {
@@ -37,7 +37,7 @@ public class FilterCriteriaService {
 
     var text = defineBehaviorForTextMessageOrProvideDefault(item);
     var filters =
-        service.findFilterList().stream()
+        service.findAll().stream()
             .filter(filter -> filterIds.contains(filter.getId()))
             .toList();
 

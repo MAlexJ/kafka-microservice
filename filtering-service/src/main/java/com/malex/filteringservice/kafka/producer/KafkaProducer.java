@@ -18,9 +18,11 @@ public class KafkaProducer {
   private final KafkaTopicConfigurationProperties topicProperty;
   private final ReactiveKafkaProducerTemplate<String, ItemEvent> reactiveKafkaProducer;
 
-  public Mono<ItemEvent> sendMessage(ItemEvent event) {
+  public Mono<ItemEvent> sendKafkaEvent(ItemEvent event) {
+    var topic = topicProperty.getOut();
+    var key = event.md5Hash();
     return reactiveKafkaProducer
-        .send(topicProperty.getOut(), event.md5Hash(), event)
+        .send(topic, key, event)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();

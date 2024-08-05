@@ -13,6 +13,16 @@ spring:
       uri: ${FILTERING_SERVICE_MONGODB_URI:uri}
       database: ${FILTERING_SERVICE_MONGODB_DATABASE:filtering-service-db}
       auto-index-creation: true
+    redis:
+      host: ${FILTERING_SERVICE_DATA_REDIS_HOST:localhost}
+      port: ${FILTERING_SERVICE_DATA_REDIS_PORT:14218}
+      username: ${FILTERING_SERVICE_DATA_REDIS_USERNAME:u1}
+      password: ${FILTERING_SERVICE_DATA_REDIS_PASSWORD:p1}
+
+  threads:
+    virtual:
+      enabled: true
+
 filter:
   criteria:
     title: ${FILTERING_SERVICE_FILTER_CRITERIA_ONLY_FOR_TITLE:false}
