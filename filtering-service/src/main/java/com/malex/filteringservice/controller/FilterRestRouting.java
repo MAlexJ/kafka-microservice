@@ -1,15 +1,15 @@
 package com.malex.filteringservice.controller;
 
-import com.malex.filteringservice.model.request.FilterRequest;
-import com.malex.filteringservice.model.response.FilterResponse;
-import com.malex.filteringservice.service.filter.FilterRestService;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RouterFunctions.route;
+
+import com.malex.filteringservice.controller.handler.FilterRouterHandler;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
  * WebFlux supports using a single value reactive type to produce the ResponseEntity asynchronously,
@@ -31,29 +31,22 @@ import reactor.core.publisher.Mono;
  * Link to info: <a
  * href="https://docs.spring.io/spring-framework/reference/web/webflux/controller/ann-methods/responseentity.html">ResponseEntity</a>
  */
-@Slf4j
-@RestController
-@RequestMapping("/v1/filters")
+@Component
 @RequiredArgsConstructor
-public class ApiRestController {
+public class FilterRestRouting {
 
-  private final FilterRestService service;
+  private final FilterRouterHandler handler;
 
-  @GetMapping
-  public ResponseEntity<Flux<FilterResponse>> findAll() {
-    log.info("HTTP request - find all filters");
-    return ResponseEntity.ok(service.findAll());
-  }
-
-  @PostMapping
-  public ResponseEntity<Mono<FilterResponse>> save(@RequestBody FilterRequest request) {
-    log.info("HTTP request - {}", request);
-    return ResponseEntity.ok(service.save(request));
-  }
-
-  @DeleteMapping("/{id}")
-  public Mono<ResponseEntity<Void>> deleteById(@PathVariable String id) {
-    log.info("HTTP request, delete filter by id - {}", id);
-    return service.deleteById(id).thenReturn(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+  @Bean
+  public RouterFunction<ServerResponse> routes() {
+    return route()
+        .path(
+            "/v1/filters",
+            builder ->
+                builder
+                    .GET(accept(APPLICATION_JSON), handler::findAll)
+                    .POST(accept(APPLICATION_JSON), handler::create)
+                    .DELETE("{id}", handler::deleteById))
+        .build();
   }
 }
