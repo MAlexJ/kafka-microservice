@@ -9,8 +9,6 @@ Content-Type: application/json
   "link": "https://habr.com/ru/companies/yandex/articles/834262/?utm_source=habrahabr&utm_medium=rss&utm_campaign=834262",
   "title": "Софтмакс Гумбеля: как устроен и для каких нейронных сетей полезен",
   "description": "<img src=\"https://habrastorage.org/getpro/habr/upload_files/3fe/153/737/3fe153737bc04e18a9ce824eff22f3a7.png\" /><p>Всем привет! Меня зовут Николай Лысенко, я занимаюсь рекомендательными системами в Яндекс Маркете. Сегодня хочу затронуть интересную тему: что делать, если в графе вычислений (aka нейронная сеть) возникает дискретное место, через которое не проходит градиент. Как многие знают, для решения этой проблемы есть такие методы, как REINFORCE и софтмакс Гумбеля (Gumbel-Softmax trick). О последнем и пойдёт речь.</p><p>Хотя про софтмакс Гумбеля уже много написано, ценность этой статьи, что вам не придётся ничего искать в интернете и не потребуется делать выкладки на бумаге. Я постарался собрать всю нужную информацию и расписать все промежуточные вычисления.</p> <a href=\"https://habr.com/ru/articles/834262/?utm_source=habrahabr&amp;utm_medium=rss&amp;utm_campaign=834262#habracut\">Читать далее</a>",
-  "md5Hash": "7C3DAAF6CD343F0AD3C8B007B67FF10B",
-  "subscriptionId": "663e90e1cc51f6614ade4f1d",
   "chatId": -1001600823930,
   "templateId": "662c96f3a4d53c774c815f51",
   "customizationId": "662c96f3a4d53c774c815f54"

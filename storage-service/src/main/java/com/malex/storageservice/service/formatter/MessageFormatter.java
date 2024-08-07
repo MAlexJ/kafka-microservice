@@ -1,16 +1,15 @@
-package com.malex.storageservice.utils;
+package com.malex.storageservice.service.formatter;
 
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
-public class MessageFormatUtils {
+@Service
+public class MessageFormatter {
+
   private static final String SHORT_MASSAGE_FORMAT = "%s ...";
   private static final String EMPTY_STRING = "";
 
-  private MessageFormatUtils() {
-    // not use
-  }
-
-  public static String shortMessageInfo(Object obj) {
+  public String shortMessageInfo(Object obj) {
     return Optional.ofNullable(obj)
         .map(Object::toString)
         .filter(message -> message.length() > 200)

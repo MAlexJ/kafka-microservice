@@ -15,7 +15,6 @@ public class ItemEntity {
   @Column("id")
   private Long id;
 
-  // item info
   @Column("link")
   private String link;
 
@@ -24,13 +23,6 @@ public class ItemEntity {
 
   @Column("description")
   private String description;
-
-  @Column("md5Hash")
-  private String md5Hash;
-
-  // subscription info
-  @Column("subscriptionId")
-  private String subscriptionId;
 
   @Column("chatId")
   private Long chatId;
@@ -43,6 +35,4 @@ public class ItemEntity {
 
   @Column("isActive")
   private boolean isActive;
-
-  //    private   List<String> filterIds
 }

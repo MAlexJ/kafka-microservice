@@ -1,8 +1,10 @@
 package com.malex.storageservice.controller.handler;
 
-import com.malex.storageservice.model.entity.ItemEntity;
-import com.malex.storageservice.repository.ItemRepository;
+import com.malex.storageservice.model.request.ItemRequest;
+import com.malex.storageservice.model.response.ItemResponse;
+import com.malex.storageservice.service.rest.RestItemService;
 import java.net.URI;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -16,22 +18,31 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ItemsRouterHandler {
 
-  private final ItemRepository repository;
+  private final RestItemService service;
 
   public Mono<ServerResponse> findAll(ServerRequest request) {
-    return ServerResponse.ok().body(repository.findAll(), ItemEntity.class);
+    //      @RequestParam(value = "page", defaultValue = "1") Integer page,
+    //      @RequestParam(value = "size", defaultValue = "10") Long limit,
+    //      @RequestParam Map<String, String> filterParams
+    // link:
+    // https://gatheca-george.medium.com/spring-webflux-using-relational-database-mysql-postgresql-fcc5e487f57f
+    return ServerResponse.ok()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(service.findAll(), ItemResponse.class)
+        .onErrorResume((e) -> ServerResponse.badRequest().build());
   }
 
   public Mono<ServerResponse> create(ServerRequest request) {
     return request
-        .bodyToMono(ItemEntity.class)
-        .doOnNext(filterRequest -> log.info("HTTP request - {}", filterRequest))
-        .flatMap(repository::save)
+        .bodyToMono(ItemRequest.class)
+        .filter(Objects::nonNull)
+        .doOnNext(item -> log.debug("HTTP request - {}", item))
+        .flatMap(service::create)
         .flatMap(
-            filterResponse ->
-                ServerResponse.created(URI.create("/filters/" + filterResponse.getId()))
+            item ->
+                ServerResponse.created(URI.create("/filters/" + item.id()))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(filterResponse))
+                    .bodyValue(item))
         .onErrorResume(
             (e) -> {
               log.error("Error occurred while creating the item", e);

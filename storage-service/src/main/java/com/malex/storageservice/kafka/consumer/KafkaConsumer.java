@@ -1,10 +1,10 @@
 package com.malex.storageservice.kafka.consumer;
 
-import static com.malex.storageservice.utils.MessageFormatUtils.shortMessageInfo;
 
 import com.malex.storageservice.model.entity.ItemEntity;
 import com.malex.storageservice.model.event.ItemEvent;
-import com.malex.storageservice.service.ItemService;
+import com.malex.storageservice.service.kafka.KafkaItemService;
+import com.malex.storageservice.service.formatter.MessageFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -19,7 +19,8 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  private final ItemService service;
+  private final KafkaItemService service;
+  private final MessageFormatter formater;
 
   private final ReactiveKafkaConsumerTemplate<String, ItemEvent> reactiveKafkaConsumer;
 
@@ -32,7 +33,7 @@ public class KafkaConsumer {
                 log.debug(
                     "Received event: key - {}, value - {}, topic - {}, partition - {} offset - {}",
                     record.key(),
-                    shortMessageInfo(record.value()),
+                    formater.shortMessageInfo(record.value()),
                     record.topic(),
                     record.partition(),
                     record.offset()))

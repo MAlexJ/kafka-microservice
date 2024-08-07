@@ -8,8 +8,7 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 @EnableR2dbcRepositories
 public class StorageServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StorageServiceApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(StorageServiceApplication.class, args);
+  }
 }

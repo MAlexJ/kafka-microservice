@@ -1,3 +1,17 @@
+### Working With Relational Database Using R2dbc DatabaseClient
+
+video tutorial: https://www.youtube.com/watch?v=ECajRLPhVc8&t=493s
+link: https://medium.com/swlh/working-with-relational-database-using-r2dbc-databaseclient-d61a60ebc67f
+
+In Spring 5.2 or previous versions, when using relational databases in your applications, you have to use Jdbc or JPA to
+operate with the databases. Since Spring 5.3, things will be changed. The R2dbc’s DatabaseClient which is originally
+part of the Spring Data R2dbc is completely refactored and will be migrated to the core Spring framework.
+
+#### Spring r2dbc multiple insert statement execute one by one
+
+link: https://stackoverflow.com/questions/77695890/spring-r2dbc-multiple-insert-statement-execute-one-by-one
+link: https://github.com/hantsy/spring-r2dbc-sample/blob/master/database-client/src/main/java/com/example/demo/PostRepository.java#L90
+
 ### Spring Web Flux | Master - Slave - Pool Configuration
 
 link: https://devashishtaneja.medium.com/spring-web-flux-r2dbc-master-slave-pool-configuration-a4cf0161a332

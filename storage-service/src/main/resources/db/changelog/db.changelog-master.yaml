@@ -29,9 +29,6 @@ databaseChangeLog:
                   name: description
                   type: text
               - column:
-                  name: md5Hash
-                  type: varchar(200)
-              - column:
                   name: subscriptionId
                   type: varchar(200)
               - column:
@@ -43,23 +40,9 @@ databaseChangeLog:
               - column:
                   name: customizationId
                   type: varchar(200)
-
-      rollback:
-        - delete:
-            tableName: items
-  - changeSet:
-      id: 3
-      author: malex
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            columnExists:
-              tableName: items
-              columnName: isActive
-      changes:
-        - addColumn:
-            tableName: items
-            columns:
               - column:
                   name: isActive
                   type: boolean
+      rollback:
+        - delete:
+            tableName: items

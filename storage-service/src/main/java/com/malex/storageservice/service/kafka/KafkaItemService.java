@@ -1,4 +1,4 @@
-package com.malex.storageservice.service;
+package com.malex.storageservice.service.kafka;
 
 import com.malex.storageservice.mapper.ObjectMapper;
 import com.malex.storageservice.model.entity.ItemEntity;
@@ -13,10 +13,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ItemService {
+public class KafkaItemService {
 
-  private final ItemRepository repository;
   private final ObjectMapper mapper;
+  private final ItemRepository repository;
 
   @Transactional
   public Mono<ItemEntity> save(ItemEvent event) {
