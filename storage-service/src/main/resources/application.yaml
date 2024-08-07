@@ -1,0 +1,45 @@
+server:
+  port: ${STORAGE_SERVICE_PORT:0}
+
+logging:
+  level:
+    root: ${STORAGE_SERVICE_ROOT_LOG_LEVEL:INFO}
+    org.springframework: ${STORAGE_SERVICE_SPRING_LOG_LEVEL:INFO}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${STORAGE_SERVICE_NAME:storage-service}
+
+  threads:
+    virtual:
+      enabled: true
+
+  r2dbc:
+    url: r2dbc:mysql://${STORAGE_SERVICE_MYSQL_URL}:${STORAGE_SERVICE_MYSQL_PORT}/${STORAGE_SERVICE_MYSQL_DATABASE}
+    username: ${STORAGE_SERVICE_MYSQL_USERNAME}
+    password: ${STORAGE_SERVICE_MYSQL_PASSWORD}
+
+kafka:
+  topic:
+    in: ${CLOUD_KAFKA_USERNAME}-${STORAGE_SERVICE_TOPIC_IN:storage-topic}
+  server:
+    bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
+    propertySecurityProtocol: SASL_SSL
+    propertySaslMechanism: SCRAM-SHA-256
+    propertySaslJaasConfig: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
+  consumer:
+    autoOffsetReset: earliest
+    groupId: ${CLOUD_KAFKA_USERNAME}-consumers
+    keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+    valueDeserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    propertySpringJsonTrustedPackages: '*'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

@@ -3,7 +3,7 @@ package com.malex.subscriptionservice.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record Subscription(
+public record SubscriptionEvent(
     String id,
     Long chatId,
     String templateId,

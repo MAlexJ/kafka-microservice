@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.model.request;
 
-import static com.malex.subscriptionservice.utils.SubscriptionUtils.errorMessage;
+import static com.malex.subscriptionservice.utils.MessageFormatUtils.errorMessage;
 
 import java.util.List;
 import java.util.Objects;

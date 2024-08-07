@@ -28,6 +28,7 @@ public class Md5HashService {
   public Mono<ItemEvent> saveItemMd5Hash(ItemEvent item) {
     var md5Hash = item.md5Hash();
     var entity = buildEntity(md5Hash);
+    log.info("Save item Md5Hash - {}", entity);
     return service.save(entity).map(r -> item);
   }
 

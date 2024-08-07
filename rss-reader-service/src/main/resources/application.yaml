@@ -44,7 +44,7 @@ spring:
 
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC_IN:subscription-topic}
+    in: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC_IN:rss-topic}
     out: ${CLOUD_KAFKA_USERNAME}-${RSS_READER_SERVICE_TOPIC_OUT:filtering-topic}
   server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
@@ -68,3 +68,10 @@ md5Hash:
   calculation:
     baseOn:
       link: ${RSS_READER_SERVICE_CALCULATE_MD5_ONLY_FOR_LINK:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

@@ -1,7 +1,7 @@
 package com.malex.subscriptionservice.service;
 
 import com.malex.subscriptionservice.mapper.ObjectMapper;
-import com.malex.subscriptionservice.model.Subscription;
+import com.malex.subscriptionservice.model.SubscriptionEvent;
 import com.malex.subscriptionservice.model.request.SubscriptionRequest;
 import com.malex.subscriptionservice.model.response.SubscriptionResponse;
 import com.malex.subscriptionservice.repository.SubscriptionRepository;
@@ -29,7 +29,7 @@ public class SubscriptionService {
     return repository.findAll().map(mapper::entityToResponse);
   }
 
-  public Flux<Subscription> findAllActiveSubscriptions() {
+  public Flux<SubscriptionEvent> findAllActiveSubscriptions() {
     return repository.findActiveSubscription(true).map(mapper::entityToModel);
   }
 

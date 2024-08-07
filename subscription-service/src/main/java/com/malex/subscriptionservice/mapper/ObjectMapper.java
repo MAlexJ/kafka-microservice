@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.mapper;
 
-import com.malex.subscriptionservice.model.Subscription;
+import com.malex.subscriptionservice.model.SubscriptionEvent;
 import com.malex.subscriptionservice.model.entity.SubscriptionEntity;
 import com.malex.subscriptionservice.model.request.SubscriptionRequest;
 import com.malex.subscriptionservice.model.response.SubscriptionResponse;
@@ -20,5 +20,5 @@ public interface ObjectMapper {
   SubscriptionResponse entityToResponse(SubscriptionEntity entity);
 
   @Mapping(source = "active", target = "isActive")
-  Subscription entityToModel(SubscriptionEntity entity);
+  SubscriptionEvent entityToModel(SubscriptionEntity entity);
 }

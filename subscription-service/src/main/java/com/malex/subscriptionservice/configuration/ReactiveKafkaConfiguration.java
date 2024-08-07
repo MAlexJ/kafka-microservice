@@ -1,6 +1,6 @@
 package com.malex.subscriptionservice.configuration;
 
-import com.malex.subscriptionservice.model.Subscription;
+import com.malex.subscriptionservice.model.SubscriptionEvent;
 import com.malex.subscriptionservice.property.KafkaConfigurationProperties;
 import com.malex.subscriptionservice.property.KafkaProducerConfigurationProperties;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class ReactiveKafkaConfiguration {
    * href="https://stackoverflow.com/questions/60825373/spring-kafka-application-properties-configuration-for-jaas-sasl-not-working">JAAS/SASL</a>
    */
   @Bean
-  public ReactiveKafkaProducerTemplate<String, Subscription> reactiveKafkaProducer() {
+  public ReactiveKafkaProducerTemplate<String, SubscriptionEvent> reactiveKafkaProducer() {
     var props = new HashMap<String, Object>();
     props.put(
         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, configurationProperties.getBootstrapServer());

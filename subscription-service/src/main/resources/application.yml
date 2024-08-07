@@ -16,8 +16,7 @@ spring:
 
 kafka:
   topic:
-    in: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_IN:replay-telegram-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:subscription-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${SUBSCRIPTION_SERVICE_TOPIC_OUT:rss-topic}
   server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
     propertySecurityProtocol: SASL_SSL
@@ -29,3 +28,10 @@ kafka:
     valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
     propertyEnableIdempotence: false
     propertySpringJsonAddTypeHeaders: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

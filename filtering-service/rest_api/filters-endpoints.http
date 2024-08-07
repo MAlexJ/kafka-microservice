@@ -21,4 +21,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8889/v1/filters/66b139591a571f2c7de947e7
+DELETE http://localhost:8889/v1/filters/66b23934b2270f2fad9a422c

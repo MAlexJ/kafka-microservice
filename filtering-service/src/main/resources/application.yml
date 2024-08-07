@@ -1,6 +1,11 @@
 server:
   port: ${FILTERING_SERVICE_PORT:0}
 
+logging:
+  level:
+    root: ${APP_SERVICE_ROOT_LOG_LEVEL:INFO}
+    org.springframework: ${APP_SERVICE_SPRING_LOG_LEVEL:INFO}
+
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -30,13 +35,12 @@ filter:
 kafka:
   topic:
     in: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_IN:filtering-topic}
-    out: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_OUT:template-resolver-topic}
+    out: ${CLOUD_KAFKA_USERNAME}-${FILTERING_SERVICE_TOPIC_OUT:storage-topic}
   server:
     bootstrapServer: ${CLOUD_KAFKA_BROKER_URL}
     propertySecurityProtocol: SASL_SSL
     propertySaslMechanism: SCRAM-SHA-256
-    propertySaslJaasConfig: org.apache.kafka.common.security.scram.ScramLoginModule required
-      username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
+    propertySaslJaasConfig: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUD_KAFKA_USERNAME}" password="${CLOUD_KAFKA_PASSWORD}";
   producer:
     keySerializer: org.apache.kafka.common.serialization.StringSerializer
     valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -48,3 +52,10 @@ kafka:
     keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
     valueDeserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     propertySpringJsonTrustedPackages: '*'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

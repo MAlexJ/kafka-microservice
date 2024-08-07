@@ -5,4 +5,5 @@ include 'subscription-service',
         'filtering-service',
         'template-resolver-service',
         'publisher-service',
-        'customization-service'
+        'customization-service',
+        'storage-service'

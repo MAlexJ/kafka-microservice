@@ -11,7 +11,6 @@ import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 
 @Slf4j
@@ -23,7 +22,6 @@ public class KafkaConsumer {
 
   private final KafkaEventProcessor eventProcessor;
 
-  @Transactional
   @EventListener(ApplicationStartedEvent.class)
   public Flux<ItemEvent> consumerEventListener() {
 

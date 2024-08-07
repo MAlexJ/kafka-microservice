@@ -1,7 +1,8 @@
 package com.malex.subscriptionservice.kafka.producer;
 
-import com.malex.subscriptionservice.model.Subscription;
+import com.malex.subscriptionservice.model.SubscriptionEvent;
 import com.malex.subscriptionservice.property.KafkaTopicProperties;
+import com.malex.subscriptionservice.utils.MessageFormatUtils;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,13 @@ public class KafkaProducer {
 
   private final KafkaTopicProperties topicProperties;
 
-  private final ReactiveKafkaProducerTemplate<String, Subscription> reactiveKafkaProducer;
+  private final ReactiveKafkaProducerTemplate<String, SubscriptionEvent> reactiveKafkaProducer;
 
-  public Mono<SenderResult<Void>> sendMessage(Subscription message) {
-    UUID key = UUID.randomUUID();
+  public Mono<SenderResult<Void>> sendEvent(SubscriptionEvent event) {
+    var key = UUID.randomUUID().toString();
+    var topic = topicProperties.getOut();
     return reactiveKafkaProducer
-        .send(topicProperties.getOut(), key.toString(), message)
+        .send(topic, key, event)
         .doOnSuccess(
             senderResult -> {
               Exception exception = senderResult.exception();
@@ -33,7 +35,7 @@ public class KafkaProducer {
               log.info(
                   "Send event: key - {}, value - {}, topic - {}, partition - {} offset - {}",
                   key,
-                  message.getClass().getSimpleName(),
+                  MessageFormatUtils.shortMessageInfo(event),
                   recordMetadata.topic(),
                   recordMetadata.partition(),
                   recordMetadata.offset());

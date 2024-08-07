@@ -1,4 +1,4 @@
-package com.malex.subscriptionservice.property;
+package com.malex.storageservice.property;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @ConfigurationProperties(prefix = "kafka.topic")
-public class KafkaTopicProperties {
-  private String out;
+public class KafkaTopicConfigurationProperties {
+  private String in;
 }

@@ -42,7 +42,6 @@ public class FilterCacheService {
                                 "filter_entities:" + filterEntity.getId(),
                                 filterEntity,
                                 Duration.ofMinutes(ttlInMinutes)))
-                .doOnNext(result -> log.info("Fetch data from db to cache"))
                 // Fetching the filters from the updated cache
                 .thenMany(
                     template
