@@ -29,9 +29,6 @@ databaseChangeLog:
                   name: description
                   type: text
               - column:
-                  name: subscriptionId
-                  type: varchar(200)
-              - column:
                   name: chatId
                   type: BIGINT
               - column:
