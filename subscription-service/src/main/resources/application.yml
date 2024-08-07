@@ -8,6 +8,10 @@ spring:
   application:
     name: ${SUBSCRIPTION_SERVICE_NAME:subscription-service}
 
+  threads:
+    virtual:
+      enabled: true
+
   data:
     mongodb:
       uri: ${SUBSCRIPTION_SERVICE_MONGODB_URI:uri}

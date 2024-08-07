@@ -1,17 +1,16 @@
 server:
   port: ${STORAGE_SERVICE_PORT:0}
 
-logging:
-  level:
-    root: ${STORAGE_SERVICE_ROOT_LOG_LEVEL:INFO}
-    org.springframework: ${STORAGE_SERVICE_SPRING_LOG_LEVEL:INFO}
-
 spring:
   config:
     import: optional:file:.env[.properties]
 
   application:
     name: ${STORAGE_SERVICE_NAME:storage-service}
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
   threads:
     virtual:
@@ -21,6 +20,27 @@ spring:
     url: r2dbc:mysql://${STORAGE_SERVICE_MYSQL_URL}:${STORAGE_SERVICE_MYSQL_PORT}/${STORAGE_SERVICE_MYSQL_DATABASE}
     username: ${STORAGE_SERVICE_MYSQL_USERNAME}
     password: ${STORAGE_SERVICE_MYSQL_PASSWORD}
+    pool:
+      enabled: true
+
+  liquibase:
+    url: jdbc:mysql://${STORAGE_SERVICE_MYSQL_URL}:${STORAGE_SERVICE_MYSQL_PORT}/${STORAGE_SERVICE_MYSQL_DATABASE}
+    user: ${STORAGE_SERVICE_MYSQL_USERNAME}
+    password: ${STORAGE_SERVICE_MYSQL_PASSWORD}
+
+logging:
+  level:
+    root: ${APP_SERVICE_ROOT_LOG_LEVEL:INFO}
+    #    org.springframework: ${APP_SERVICE_SPRING_LOG_LEVEL:DEBUG}
+    com:
+      malex:
+        storageservice:
+          kafka:
+            consumer: DEBUG
+          service: DEBUG
+    org:
+      springframework:
+        r2dbc: DEBUG
 
 kafka:
   topic:

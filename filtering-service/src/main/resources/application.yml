@@ -13,6 +13,10 @@ spring:
   application:
     name: ${FILTERING_SERVICE_NAME:filtering-service}
 
+  threads:
+    virtual:
+      enabled: true
+
   data:
     mongodb:
       uri: ${FILTERING_SERVICE_MONGODB_URI:uri}
@@ -23,10 +27,6 @@ spring:
       port: ${FILTERING_SERVICE_DATA_REDIS_PORT:14218}
       username: ${FILTERING_SERVICE_DATA_REDIS_USERNAME:u1}
       password: ${FILTERING_SERVICE_DATA_REDIS_PASSWORD:p1}
-
-  threads:
-    virtual:
-      enabled: true
 
 filter:
   criteria:

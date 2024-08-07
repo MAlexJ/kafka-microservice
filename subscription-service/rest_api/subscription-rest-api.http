@@ -1,8 +1,8 @@
 ###
-GET http://localhost:8080/v1/subscriptions
+GET http://localhost:8887/v1/subscriptions
 
 ###
-POST http://localhost:8080/v1/subscriptions
+POST http://localhost:8887/v1/subscriptions
 Content-Type: application/json
 
 {
@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8080/v1/subscriptions/66218f8b1512f67839bc5234
+PATCH http://localhost:8887/v1/subscriptions/66218f8b1512f67839bc5234

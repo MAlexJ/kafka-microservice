@@ -8,6 +8,10 @@ spring:
   application:
     name: ${RSS_READER_SERVICE_NAME:rss-reader-service}
 
+  threads:
+    virtual:
+      enabled: true
+
   kafka:
     bootstrap-servers: ${CLOUD_KAFKA_BROKER_URL}
     properties:
