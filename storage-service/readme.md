@@ -29,6 +29,23 @@ spring.r2dbc.url=r2dbc:mysql://root:@localhost:3306/example
 spring.r2dbc.pool.enabled=true
 ``
 
+### flyway MYSQL
+
+#### samples
+
+link: https://javarush.com/groups/posts/3157-java-proekt-ot-a-do-ja-springboot--flyway
+https://www.baeldung.com/database-migrations-with-flyway
+
+tutorial: https://www.youtube.com/watch?v=_0Y4I8uzMJM&list=PLAZHf0fSXoc_M4i16j_SuNooSbNa8M9_-&index=11
+
+#### properties
+
+link: https://habr.com/ru/companies/ydb/articles/815085/
+
+#### test with flyway
+
+https://habr.com/ru/companies/otus/articles/506788/
+
 ### liquibase issue with primary key for MYSQL
 
 1. run script - schema.sql

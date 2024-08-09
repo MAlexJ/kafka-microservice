@@ -23,10 +23,12 @@ spring:
     pool:
       enabled: true
 
-  liquibase:
+  flyway:
+    locations: classpath:db/mysql.migration
     url: jdbc:mysql://${STORAGE_SERVICE_MYSQL_URL}:${STORAGE_SERVICE_MYSQL_PORT}/${STORAGE_SERVICE_MYSQL_DATABASE}
     user: ${STORAGE_SERVICE_MYSQL_USERNAME}
     password: ${STORAGE_SERVICE_MYSQL_PASSWORD}
+    validate-on-migrate: true
 
 logging:
   level:
