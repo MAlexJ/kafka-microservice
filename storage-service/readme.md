@@ -29,7 +29,11 @@ spring.r2dbc.url=r2dbc:mysql://root:@localhost:3306/example
 spring.r2dbc.pool.enabled=true
 ``
 
-### flyway MYSQL
+### Reactive CRUD support Pageable
+
+link: https://www.youtube.com/watch?v=r89aJJzISj8&list=PLAZHf0fSXoc_M4i16j_SuNooSbNa8M9_-&index=15
+
+### Flyway MYSQL
 
 #### samples
 
@@ -45,26 +49,3 @@ link: https://habr.com/ru/companies/ydb/articles/815085/
 #### test with flyway
 
 https://habr.com/ru/companies/otus/articles/506788/
-
-### liquibase issue with primary key for MYSQL
-
-1. run script - schema.sql
-   ``
-   CREATE TABLE IF NOT EXISTS "DATABASECHANGELOG"  (
-   "ID" varchar(255) NOT NULL,
-   "AUTHOR" varchar(255) NOT NULL,
-   "FILENAME" varchar(255) NOT NULL,
-   "DATEEXECUTED" datetime NOT NULL,
-   "ORDEREXECUTED" varchar(10) NOT NULL,
-   "EXECTYPE" varchar(45) NOT NULL,
-   "MD5SUM" varchar(35) DEFAULT NULL,
-   "DESCRIPTION" varchar(255) DEFAULT NULL,
-   "COMMENTS" varchar(255) DEFAULT NULL,
-   "TAG" varchar(255) DEFAULT NULL,
-   "LIQUIBASE" varchar(20) DEFAULT NULL,
-   "CONTEXTS" varchar(255) DEFAULT NULL,
-   "LABELS" varchar(255) DEFAULT NULL,
-   "DEPLOYMENT_ID" varchar(10) DEFAULT NULL,
-   PRIMARY KEY ("ID")
-   );
-   ``
