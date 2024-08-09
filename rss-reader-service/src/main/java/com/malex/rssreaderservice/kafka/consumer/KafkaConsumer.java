@@ -1,7 +1,7 @@
 package com.malex.rssreaderservice.kafka.consumer;
 
 import com.malex.rssreaderservice.kafka.producer.KafkaProducer;
-import com.malex.rssreaderservice.model.event.Subscription;
+import com.malex.rssreaderservice.model.event.SubscriptionEvent;
 import com.malex.rssreaderservice.webservice.RssReaderWebService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class KafkaConsumer {
 
   private final KafkaProducer producerService;
   private final RssReaderWebService rssReaderService;
-  private final ReactiveKafkaConsumerTemplate<String, Subscription> reactiveKafkaConsumer;
+  private final ReactiveKafkaConsumerTemplate<String, SubscriptionEvent> reactiveKafkaConsumer;
 
   @EventListener(ApplicationStartedEvent.class)
   public Flux<String> consumerEventListener() {

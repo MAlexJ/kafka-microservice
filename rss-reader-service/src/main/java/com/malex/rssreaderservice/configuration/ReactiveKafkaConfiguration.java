@@ -1,7 +1,7 @@
 package com.malex.rssreaderservice.configuration;
 
-import com.malex.rssreaderservice.model.event.RssItem;
-import com.malex.rssreaderservice.model.event.Subscription;
+import com.malex.rssreaderservice.model.event.RssItemEvent;
+import com.malex.rssreaderservice.model.event.SubscriptionEvent;
 import com.malex.rssreaderservice.property.KafkaConfigurationProperties;
 import com.malex.rssreaderservice.property.KafkaConsumerConfigurationProperties;
 import com.malex.rssreaderservice.property.KafkaProducerConfigurationProperties;
@@ -35,10 +35,10 @@ public class ReactiveKafkaConfiguration {
   private final KafkaConsumerConfigurationProperties consumerProperties;
   private final KafkaProducerConfigurationProperties producerProperties;
 
-  private final String messageEvenDeserializationClass = Subscription.class.getName();
+  private final String messageEvenDeserializationClass = SubscriptionEvent.class.getName();
 
   @Bean
-  public ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer() {
+  public ReactiveKafkaProducerTemplate<String, RssItemEvent> reactiveKafkaProducer() {
     var props = new HashMap<String, Object>() {};
     // base configuration
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServer());
@@ -60,17 +60,17 @@ public class ReactiveKafkaConfiguration {
   }
 
   @Bean
-  public ReactiveKafkaConsumerTemplate<String, Subscription> reactiveKafkaConsumer() {
+  public ReactiveKafkaConsumerTemplate<String, SubscriptionEvent> reactiveKafkaConsumer() {
     var basicReceiverOptions = subscribeOnTopics();
     return new ReactiveKafkaConsumerTemplate<>(basicReceiverOptions);
   }
 
-  private ReceiverOptions<String, Subscription> subscribeOnTopics() {
+  private ReceiverOptions<String, SubscriptionEvent> subscribeOnTopics() {
     return buidConsumerReceiverOptions()
         .subscription(Collections.singletonList(topicProperties.getIn()));
   }
 
-  private ReceiverOptions<String, Subscription> buidConsumerReceiverOptions() {
+  private ReceiverOptions<String, SubscriptionEvent> buidConsumerReceiverOptions() {
     var props = new HashMap<String, Object>();
     // base configuration
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServer());

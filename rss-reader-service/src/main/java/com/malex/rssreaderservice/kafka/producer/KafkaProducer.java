@@ -1,6 +1,6 @@
 package com.malex.rssreaderservice.kafka.producer;
 
-import com.malex.rssreaderservice.model.event.RssItem;
+import com.malex.rssreaderservice.model.event.RssItemEvent;
 import com.malex.rssreaderservice.property.KafkaTopicConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +16,9 @@ import reactor.kafka.sender.SenderResult;
 public class KafkaProducer {
 
   private final KafkaTopicConfigurationProperties topicProperty;
-  private final ReactiveKafkaProducerTemplate<String, RssItem> reactiveKafkaProducer;
+  private final ReactiveKafkaProducerTemplate<String, RssItemEvent> reactiveKafkaProducer;
 
-  public Mono<String> sendMessage(RssItem item) {
+  public Mono<String> sendMessage(RssItemEvent item) {
     return reactiveKafkaProducer
         .send(topicProperty.getOut(), item.md5Hash(), item)
         .doOnSuccess(

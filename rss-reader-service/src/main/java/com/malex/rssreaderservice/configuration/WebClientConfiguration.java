@@ -10,13 +10,16 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
+/**
+ * TODO Remove it, not use
+ */
 @Configuration
 public class WebClientConfiguration {
 
   public static final int TIMEOUT = 2000;
 
   @Bean
-  public WebClient loadBalancedWebClient() {
+  public WebClient webClient() {
     final var httpClient =
         HttpClient.create() //
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT) //

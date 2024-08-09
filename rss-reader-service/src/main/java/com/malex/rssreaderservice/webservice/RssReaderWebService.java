@@ -2,8 +2,8 @@ package com.malex.rssreaderservice.webservice;
 
 import com.apptasticsoftware.rssreader.Item;
 import com.apptasticsoftware.rssreader.RssReader;
-import com.malex.rssreaderservice.model.event.RssItem;
-import com.malex.rssreaderservice.model.event.Subscription;
+import com.malex.rssreaderservice.model.event.RssItemEvent;
+import com.malex.rssreaderservice.model.event.SubscriptionEvent;
 import com.malex.rssreaderservice.service.RssItemMapperService;
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -20,7 +20,7 @@ public class RssReaderWebService {
   private final RssItemMapperService service;
 
   /** Read the latest news on Rss url */
-  public Flux<RssItem> readRss(Subscription subscription) {
+  public Flux<RssItemEvent> readRss(SubscriptionEvent subscription) {
     return Flux.fromStream(openRssStream(subscription.rss()))
         .map(item -> service.mapItemToDtoWithMd5Hash(item, subscription));
   }

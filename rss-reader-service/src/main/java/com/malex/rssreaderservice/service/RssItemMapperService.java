@@ -1,8 +1,8 @@
 package com.malex.rssreaderservice.service;
 
 import com.apptasticsoftware.rssreader.Item;
-import com.malex.rssreaderservice.model.event.RssItem;
-import com.malex.rssreaderservice.model.event.Subscription;
+import com.malex.rssreaderservice.model.event.RssItemEvent;
+import com.malex.rssreaderservice.model.event.SubscriptionEvent;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ public class RssItemMapperService {
   private final Md5HashService hashService;
 
   /** map RSS item to dto with MD5 hash calculation */
-  public RssItem mapItemToDtoWithMd5Hash(Item item, Subscription subscription) {
+  public RssItemEvent mapItemToDtoWithMd5Hash(Item item, SubscriptionEvent event) {
     // item info
     var link = readStingValue(item.getLink());
     var title = readStingValue(item.getTitle());
     var description = readStingValue(item.getDescription());
     // MD5 hash calculation
     var md5Hash = hashService.calculateMd5HashByCriteria(link, title, description);
-    return RssItem.builder()
+    return RssItemEvent.builder()
         // item info
         .link(link)
         .title(title)
@@ -30,11 +30,11 @@ public class RssItemMapperService {
         // MD5 hash
         .md5Hash(md5Hash)
         // subscription info
-        .subscriptionId(subscription.id())
-        .chatId(subscription.chatId())
-        .templateId(subscription.templateId())
-        .customizationId(subscription.customizationId())
-        .filterIds(subscription.filterIds())
+        .subscriptionId(event.id())
+        .chatId(event.chatId())
+        .templateId(event.templateId())
+        .customizationId(event.customizationId())
+        .filterIds(event.filterIds())
         .build();
   }
 
