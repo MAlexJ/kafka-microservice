@@ -1,22 +1,17 @@
-package com.malex.subscriptionservice.utils;
+package com.malex.subscriptionservice.service.formatter;
 
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
-public class MessageFormatUtils {
+@Service
+public class MessageFormatter {
 
   private static final String SHORT_MASSAGE_FORMAT = "%s ...";
   private static final String ERROR_MESSAGE_TEMPLATE = "'%s' is a mandatory parameter";
   private static final String EMPTY_STRING = "";
 
-  private MessageFormatUtils() {
-    // not use
-  }
 
-  public static String errorMessage(String parameter) {
-    return String.format(ERROR_MESSAGE_TEMPLATE, parameter);
-  }
-
-  public static String shortMessageInfo(Object obj) {
+  public String shortMessageInfo(Object obj) {
     return Optional.ofNullable(obj)
         .map(Object::toString)
         .filter(message -> message.length() > 200)
