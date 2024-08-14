@@ -16,6 +16,12 @@ spring:
     virtual:
       enabled: true
 
+  boot:
+    admin:
+      client:
+        enabled: ${ADMIN_SERVER_ENABLE:false}
+        url: ${ADMIN_SERVER_URL:http://localhost:8999}
+
   r2dbc:
     url: r2dbc:mysql://${STORAGE_SERVICE_MYSQL_URL}:${STORAGE_SERVICE_MYSQL_PORT}/${STORAGE_SERVICE_MYSQL_DATABASE}
     username: ${STORAGE_SERVICE_MYSQL_USERNAME}
@@ -63,5 +69,4 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
+        include: '*'

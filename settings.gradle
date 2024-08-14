@@ -6,4 +6,5 @@ include 'subscription-service',
         'template-resolver-service',
         'publisher-service',
         'customization-service',
-        'storage-service'
+        'storage-service',
+        'monitoring_service'

@@ -28,6 +28,12 @@ spring:
       username: ${FILTERING_SERVICE_DATA_REDIS_USERNAME:u1}
       password: ${FILTERING_SERVICE_DATA_REDIS_PASSWORD:p1}
 
+  boot:
+    admin:
+      client:
+        enabled: ${ADMIN_SERVICE_ENABLE_MONITORING:false}
+        url: ${ADMIN_SERVICE_URL:http://localhost:8999}
+
 filter:
   criteria:
     title: ${FILTERING_SERVICE_FILTER_CRITERIA_ONLY_FOR_TITLE:false}
@@ -57,5 +63,4 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
+        include: '*'

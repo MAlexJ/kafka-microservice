@@ -1,0 +1,18 @@
+server:
+  port: ${ADMIN_SERVICE_PORT:0}
+
+logging:
+  level:
+    root: ${ADMIN_SERVICE_ROOT_LOG_LEVEL:INFO}
+    org.springframework: ${ADMIN_SERVICE_PORT_LOG_LEVEL:INFO}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${ADMIN_SERVICE_NAME:monitoring_service}
+
+  threads:
+    virtual:
+      enabled: true

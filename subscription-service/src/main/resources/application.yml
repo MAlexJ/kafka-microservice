@@ -12,6 +12,12 @@ spring:
     virtual:
       enabled: true
 
+  boot:
+    admin:
+      client:
+        enabled: ${ADMIN_SERVICE_ENABLE_MONITORING:false}
+        url: ${ADMIN_SERVICE_URL:http://localhost:8999}
+
   data:
     mongodb:
       uri: ${SUBSCRIPTION_SERVICE_MONGODB_URI:uri}
@@ -37,5 +43,4 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
+        include: '*'

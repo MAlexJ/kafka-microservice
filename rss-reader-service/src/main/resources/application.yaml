@@ -12,6 +12,12 @@ spring:
     virtual:
       enabled: true
 
+  boot:
+    admin:
+      client:
+        enabled: ${ADMIN_SERVICE_ENABLE_MONITORING:false}
+        url: ${ADMIN_SERVICE_URL:http://localhost:8999}
+
   kafka:
     bootstrap-servers: ${CLOUD_KAFKA_BROKER_URL}
     properties:
@@ -77,5 +83,4 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
+        include: '*'
