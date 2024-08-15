@@ -1,0 +1,25 @@
+server:
+  port: ${ITEMS_PROCESSOR_SERVICE_PORT:0}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${ITEMS_PROCESSOR_SERVICE_NAME:items_processor_service}
+
+  boot:
+    admin:
+      client:
+        enabled: ${ADMIN_SERVICE_ENABLE_MONITORING:false}
+        url: ${ADMIN_SERVICE_URL:http://localhost:8999}
+
+  threads:
+    virtual:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
