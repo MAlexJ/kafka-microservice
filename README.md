@@ -3,12 +3,26 @@
 ##### Description:
 
 * Java 21
-* Springboot 3.3.2
-* Gradle 8.9
+* Springboot 3.3.3
+* Gradle 8.10
 * Kafka cloud
 * Mongo atlas database
 * render.com webservice
 * UptimeRobot webservice monitoring
+
+## Microservices
+
+The term "Microservice Architecture" has sprung up over the last few years to describe a particular way of designing
+software applications as suites of independently deployable services. While there is no precise definition of this
+architectural style, there are certain common characteristics around organization around business capability, automated
+deployment, intelligence in the endpoints, and decentralized control of languages and data.
+
+link: https://martinfowler.com/articles/microservices.html
+
+1. How to properly design a project: https://habr.com/ru/articles/761650/
+2. Learn free to exploit Java (and not only) application (Docker, CircleCI, Google
+   Cloud): https://habr.com/ru/articles/765952/
+3. Microservice architecture, Spring Cloud и Docker: https://habr.com/ru/articles/280786/
 
 ### Cloud kafka
 
@@ -120,6 +134,18 @@ git update-index --chmod=+x gradlew
 git add .
 git commit -m "Changing permission of gradlew"
 git push
+```
+
+### Gradle wrapper
+
+Gradle Wrapper Reference:
+https://docs.gradle.org/current/userguide/gradle_wrapper.html
+
+How to Upgrade Gradle Wrapper:
+https://dev.to/pfilaretov42/tiny-how-to-upgrade-gradle-wrapper-3obl
+
+```
+./gradlew wrapper --gradle-version latest
 ```
 
 ### Reactive Kafka Producer/Consumer with SpringBoot
