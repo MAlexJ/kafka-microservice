@@ -1,0 +1,29 @@
+custom:
+  rabbitmq:
+    username: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_USERNAME:***}
+    password: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_PASSWORD:***}
+    port: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_PORT:5672}
+    host: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_HOST:localhost}
+    virtualhost: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_VIRTUAL_HOST:***}
+    queue:
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_STORAGE:storage_queue}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_REPLAY:storage_replay_queue}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_TEMPLATE:template_queue}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_CUSTOMIZATION:customization_queue}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_PUBLISHER:publisher_queue}
+    exchange:
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_STORAGE:storage_exchange}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_REPLAY:storage_replay_exchange}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_TEMPLATE:template_exchange}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_CUSTOMIZATION:customization_exchange}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_PUBLISHER:publisher_exchange}
+    routing:
+      key:
+        storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_STORAGE:storage_exchange}
+        storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_REPLAY:storage_replay_exchange}
+        template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_TEMPLATE:template_exchange}
+        customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_CUSTOMIZATION:customization_exchange}
+        publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_PUBLISHER:publisher_exchange}
+    ttl:
+      storage: 60000
+      storage_replay: 600000

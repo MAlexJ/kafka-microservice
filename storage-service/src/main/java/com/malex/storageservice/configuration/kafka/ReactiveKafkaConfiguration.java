@@ -1,4 +1,4 @@
-package com.malex.storageservice.configuration;
+package com.malex.storageservice.configuration.kafka;
 
 import com.malex.storageservice.model.event.ItemEvent;
 import com.malex.storageservice.property.KafkaConfigurationProperties;

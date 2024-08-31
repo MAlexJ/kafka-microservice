@@ -1,10 +1,9 @@
-package com.malex.storageservice.kafka.consumer;
-
+package com.malex.storageservice.consumer.kafka;
 
 import com.malex.storageservice.model.entity.ItemEntity;
 import com.malex.storageservice.model.event.ItemEvent;
-import com.malex.storageservice.service.kafka.KafkaItemService;
 import com.malex.storageservice.service.formatter.MessageFormatter;
+import com.malex.storageservice.service.kafka.KafkaItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

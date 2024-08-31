@@ -1,5 +1,8 @@
 server:
   port: ${ITEMS_PROCESSOR_SERVICE_PORT:0}
+  error:
+    include-stacktrace: always
+    include-message: always
 
 spring:
   config:
@@ -17,6 +20,36 @@ spring:
   threads:
     virtual:
       enabled: true
+
+custom:
+  rabbitmq:
+    username: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_USERNAME:****}
+    password: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_PASSWORD:****}
+    port: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_PORT:5672}
+    host: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_HOST:localhost}
+    virtualhost: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_VIRTUAL_HOST:****}
+    queue:
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_STORAGE:rss_storage_queue}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_REPLAY:rss_replay_queue}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_TEMPLATE:rss_template_queue}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_CUSTOMIZATION:rss_customization_queue}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_PUBLISHER:rss_publisher_queue}
+    exchange:
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_STORAGE:rss_storage_exchange}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_REPLAY:rss_replay_exchange}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_TEMPLATE:rss_template_exchange}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_CUSTOMIZATION:rss_customization_exchange}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_PUBLISHER:rss_publisher_exchange}
+    routing:
+      key:
+        storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_STORAGE:rss_storage_exchange}
+        storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_REPLAY:rss_replay_exchange}
+        template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_TEMPLATE:rss_template_exchange}
+        customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_CUSTOMIZATION:rss_customization_exchange}
+        publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_PUBLISHER:rss_publisher_exchange}
+    ttl:
+      storage: 60000
+      storage_replay: 600000
 
 management:
   endpoints:
