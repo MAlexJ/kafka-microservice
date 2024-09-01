@@ -78,9 +78,7 @@ rabbitmq:
     replay: ${STORAGE_SERVICE_RABBITMQ_REPLAY_QUEUE:storage_service_replay_queue}
   exchange:
     forward: ${STORAGE_SERVICE_RABBITMQ_EXCHANGE:storage_service_exchange}
-    replay:
-      name: ${STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE:storage_service_replay_exchange}
-      type: ${STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE_TYPE:direct}
+    replay: ${STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE:storage_service_replay_exchange}
   routing:
     key:
       forward: ${STORAGE_SERVICE_RABBITMQ_ROUTING_KEY:storage_service_routing_key}
