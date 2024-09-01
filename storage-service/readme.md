@@ -1,3 +1,62 @@
+### Storage service
+
+##### Description:
+
+* Java 21
+* Springboot 3.3.3
+* Webflux
+* Gradle 8.10
+* Kafka
+* RabbitMQ
+* render.com webservice
+* UptimeRobot webservice monitoring
+
+#### Project configuration
+
+Kafka provider: https://www.cloudkarafka.com
+
+###### Add properties to `.env` file:
+
+```
+STORAGE_SERVICE_CLOUD_KAFKA_USERNAME=......
+STORAGE_SERVICE_CLOUD_KAFKA_PASSWORD=.........
+STORAGE_SERVICE_CLOUD_KAFKA_BROKER_URL=........cloudkafka.com:....port....
+```
+
+RabbitMQ Provider: https://www.cloudamqp.com (Message Queues in the Cloud)
+
+###### Add properties to `.env` file:
+
+```
+STORAGE_SERVICE_RABBITMQ_HOST=......cloudamqp.com
+STORAGE_SERVICE_RABBITMQ_PORT=...
+STORAGE_SERVICE_RABBITMQ_USERNAME=....
+STORAGE_SERVICE_RABBITMQ_PASSWORD=......
+STORAGE_SERVICE_RABBITMQ_VIRTUAL_HOST=....
+
+### forward queue
+STORAGE_SERVICE_RABBITMQ_QUEUE=storage_service_queue
+STORAGE_SERVICE_RABBITMQ_EXCHANGE=storage_service_exchange
+STORAGE_SERVICE_RABBITMQ_ROUTING_KEY=storage_service_routing_key
+
+### replay queue
+STORAGE_SERVICE_RABBITMQ_REPLAY_QUEUE=storage_service_replay_queue
+STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE=storage_service_replay_exchange
+STORAGE_SERVICE_RABBITMQ_REPLAY_ROUTING_KEY=storage_service_replay_routing_key
+```
+
+MySQL provider: https://aiven.io
+
+###### Add properties to `.env` file:
+
+```
+STORAGE_SERVICE_MYSQL_URL=mysql-.....-.aivencloud.com
+STORAGE_SERVICE_MYSQL_PORT=.....
+STORAGE_SERVICE_MYSQL_DATABASE=storage_db
+STORAGE_SERVICE_MYSQL_USERNAME=.....
+STORAGE_SERVICE_MYSQL_PASSWORD=.....
+```
+
 ### Working With Relational Database Using R2dbc DatabaseClient
 
 video tutorial: https://www.youtube.com/watch?v=ECajRLPhVc8&t=493s

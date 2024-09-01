@@ -6,24 +6,25 @@ custom:
     host: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_HOST:localhost}
     virtualhost: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_VIRTUAL_HOST:***}
     queue:
-      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_STORAGE:storage_queue}
-      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_REPLAY:storage_replay_queue}
-      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_TEMPLATE:template_queue}
-      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_CUSTOMIZATION:customization_queue}
-      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_PUBLISHER:publisher_queue}
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_STORAGE:storage_service_queue}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_REPLAY:storage_service_replay_queue}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_TEMPLATE:template_service_queue}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_CUSTOMIZATION:customization_service_queue}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_QUEUE_PUBLISHER:publisher_service_queue}
     exchange:
-      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_STORAGE:storage_exchange}
-      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_REPLAY:storage_replay_exchange}
-      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_TEMPLATE:template_exchange}
-      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_CUSTOMIZATION:customization_exchange}
-      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_PUBLISHER:publisher_exchange}
+      storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_STORAGE:storage_service_exchange}
+      storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_REPLAY:storage_service_replay_exchange}
+      template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_TEMPLATE:template_service_exchange}
+      customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_CUSTOMIZATION:customization_service_exchange}
+      publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_EXCHANGE_PUBLISHER:publisher_service_exchange}
     routing:
       key:
-        storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_STORAGE:storage_exchange}
-        storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_REPLAY:storage_replay_exchange}
-        template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_TEMPLATE:template_exchange}
-        customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_CUSTOMIZATION:customization_exchange}
-        publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_PUBLISHER:publisher_exchange}
-    ttl:
-      storage: 60000
-      storage_replay: 600000
+        storage: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_STORAGE:storage_service_routing_key}
+        storage_replay: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_REPLAY:storage_service_replay_routing_key}
+        template: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_TEMPLATE:template_service_routing_key}
+        customization: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_CUSTOMIZATION:customization_service_routing_key}
+        publisher: ${ITEMS_PROCESSOR_SERVICE_RABBITMQ_R_KEY_PUBLISHER:publisher_service_routing_key}
+
+scheduled:
+  processing:
+    cron: 0 */15 * * * *

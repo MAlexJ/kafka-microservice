@@ -23,21 +23,10 @@ public class StorageReplayQueueConfiguration {
   @Value("${custom.rabbitmq.routing.key.storage_replay}")
   private String routingKey;
 
-  @Value("${custom.rabbitmq.ttl.storage_replay}")
-  private Integer ttl;
-
   @Bean
   @Qualifier("rabbitmq.queue.storage_replay")
   public Queue storageReplayQueue() {
-    /*
-     * Time-To-Live Feature: 'x-message-ttl'
-     *
-     * With RabbitMQ, you can set a TTL (time-to-live) argument or policy for messages and queues.
-     * As the name suggests, TTL specifies the time period that the messages and queues "live for".
-     *
-     * A message that has been in the queue for longer than the configured TTL is said to be expired.
-     */
-    return QueueBuilder.durable(queue).ttl(ttl).build();
+    return QueueBuilder.durable(queue).build();
   }
 
   @Bean

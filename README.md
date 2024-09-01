@@ -5,7 +5,7 @@
 * Java 21
 * Springboot 3.3.3
 * Gradle 8.10
-* Kafka cloud
+* Kafka
 * RabbitMQ
 * Mongo atlas database
 * render.com webservice
@@ -97,11 +97,9 @@ STORAGE_SERVICE_RABBITMQ_PASSWORD=*****
 STORAGE_SERVICE_RABBITMQ_VIRTUAL_HOST=****
 STORAGE_SERVICE_RABBITMQ_QUEUE=storage_service_queue
 STORAGE_SERVICE_RABBITMQ_EXCHANGE=storage_service_exchange
-STORAGE_SERVICE_RABBITMQ_EXCHANGE_TYPE=direct
 STORAGE_SERVICE_RABBITMQ_ROUTING_KEY=storage_service_routing_key
 STORAGE_SERVICE_RABBITMQ_REPLAY_QUEUE=storage_service_replay_queue
 STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE=storage_service_replay_exchange
-STORAGE_SERVICE_RABBITMQ_REPLAY_EXCHANGE_TYPE=direct
 STORAGE_SERVICE_RABBITMQ_REPLAY_ROUTING_KEY=storage_service_replay_routing_key
 
 ITEMS_PROCESSOR_SERVICE_RABBITMQ_HOST
@@ -115,17 +113,6 @@ TEMPLATE_RESOLVER_SERVICE_MONGODB_DATABASE=template-resolver-service-db
 
 PUBLISHER_SERVICE_MONGODB_URI=mongodb
 PUBLISHER_SERVICE_MONGODB_DATABASE=telegram-publisher-service-db
-```
-
-### Gradle Versions Plugin
-
-Displays a report of the project dependencies that are up-to-date, exceed the latest version found, have upgrades, or
-failed to be resolved, info: https://github.com/ben-manes/gradle-versions-plugin
-
-command:
-
-```
-gradle dependencyUpdates
 ```
 
 ### Java code style
@@ -156,7 +143,20 @@ git commit -m "Changing permission of gradlew"
 git push
 ```
 
-### Gradle wrapper
+### Gradle
+
+#### Gradle Versions Plugin
+
+Displays a report of the project dependencies that are up-to-date, exceed the latest version found, have upgrades, or
+failed to be resolved, info: https://github.com/ben-manes/gradle-versions-plugin
+
+command:
+
+```
+gradle dependencyUpdates
+```
+
+#### Gradle wrapper
 
 Gradle Wrapper Reference:
 https://docs.gradle.org/current/userguide/gradle_wrapper.html
@@ -166,6 +166,17 @@ https://dev.to/pfilaretov42/tiny-how-to-upgrade-gradle-wrapper-3obl
 
 ```
 ./gradlew wrapper --gradle-version latest
+```
+
+#### Gradle ignore test
+
+To skip any task from the Gradle build, we can use the -x or –exclude-task option. In this case, we’ll use “-x test” to
+skip tests from the build.
+
+To see it in action, let’s run the build command with -x option:
+
+```
+gradle build -x test
 ```
 
 ### Reactive Kafka Producer/Consumer with SpringBoot
