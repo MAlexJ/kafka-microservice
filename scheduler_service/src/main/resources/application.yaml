@@ -9,7 +9,7 @@ spring:
     import: optional:file:.env[.properties]
 
   application:
-    name: ${SCHEDULER_SERVICE_NAME:SCHEDULER_service}
+    name: ${SCHEDULER_SERVICE_NAME:scheduler_service}
 
   boot:
     admin:
