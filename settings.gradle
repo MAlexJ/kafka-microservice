@@ -8,4 +8,4 @@ include 'subscription-service',
         'customization-service',
         'storage-service',
         'monitoring_service',
-        'items_processor_service'
+        'scheduler_service'

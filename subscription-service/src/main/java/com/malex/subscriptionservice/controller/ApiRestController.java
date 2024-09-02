@@ -2,7 +2,7 @@ package com.malex.subscriptionservice.controller;
 
 import com.malex.subscriptionservice.model.request.SubscriptionRequest;
 import com.malex.subscriptionservice.model.response.SubscriptionResponse;
-import com.malex.subscriptionservice.service.SubscriptionService;
+import com.malex.subscriptionservice.service.storage.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
