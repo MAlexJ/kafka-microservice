@@ -1,11 +1,11 @@
 rootProject.name = 'kafka-microservice'
 
 include 'subscription_service',
-        'rss-reader-service',
+        'rss_reader_service',
         'filtering_service',
         'template-resolver-service',
         'publisher-service',
         'customization-service',
-        'storage-service',
+        'storage_service',
         'administration_service',
         'scheduler_service'
