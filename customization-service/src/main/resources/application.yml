@@ -35,3 +35,9 @@ kafka:
     keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
     valueDeserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     propertySpringJsonTrustedPackages: '*'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
