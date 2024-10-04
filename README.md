@@ -3,7 +3,7 @@
 ##### Description:
 
 * Java 21
-* Springboot 3.3.3
+* Springboot 3.3.4
 * Gradle 8.10
 * Kafka
 * RabbitMQ
